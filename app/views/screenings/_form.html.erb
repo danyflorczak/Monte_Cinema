@@ -10,6 +10,16 @@
       </ul>
     </div>
   <% end %>
+  
+  <div class="field">
+    <%= form.label "Movie:" %>
+    <%= form.select(:movie_id, Movie.all.collect {|c| [c.title, c.id ]}, { :include_blank => 'Wybierz' }) %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Hall:" %>
+    <%= form.select(:hall_id, Hall.all.collect {|c| [c.name, c.id ]}, { :include_blank => 'Wybierz' }) %>
+  </div>
 
   <div>
     <%= form.label :start_time, style: "display: block" %>

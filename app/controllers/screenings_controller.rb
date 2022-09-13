@@ -50,7 +50,7 @@ class ScreeningsController < ApplicationController
       end
 
       def screening_params
-        params.require(:screening).permit(:start_time, :end_time, :price)
+        params.require(:screening).permit(:movie_id, :hall_id,:start_time, :end_time, :price)
       end
   end
   
