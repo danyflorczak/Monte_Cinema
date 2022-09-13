@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Screenings</h1>
+
+<div id="screenings">
+  <% @screenings.each do |screening| %>
+    <%= render screening %>
+    <p>
+      <%= link_to "Show this screening", screening %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New screening", new_screening_path %>
