@@ -1,25 +1,20 @@
 class MoviesController < ApplicationController
     before_action :set_movie, only: %i[ show edit update destroy ]
   
-    # GET /movies 
     def index
       @movies = Movie.all
     end
   
-    # GET /movies/id
     def show
     end
   
-    # GET /movies/new
     def new
       @movie = Movie.new
     end
   
-    # GET /movies/id/edit
     def edit
     end
   
-    # POST /movies 
     def create
       @movie = Movie.new(movie_params)
       if @movie.save
@@ -29,7 +24,6 @@ class MoviesController < ApplicationController
       end
     end
   
-    # PATCH/PUT /movies/id
     def update
       if @movie.update(movie_params)
         redirect_to movie_url(@movie), notice: "Movie was successfully updated." 
@@ -38,7 +32,6 @@ class MoviesController < ApplicationController
       end
     end
   
-    # DELETE /movies/id
     def destroy
       @movie.destroy
       redirect_to movies_url, notice: "Movie was successfully destroyed." 
