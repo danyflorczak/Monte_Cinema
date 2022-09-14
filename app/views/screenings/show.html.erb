@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @screening %>
+
+<div>
+  <%= link_to "Edit this screening", edit_screening_path(@screening) %> |
+  <%= link_to "Back to screenings", screenings_path %>
+
+  <%= button_to "Destroy this screening", @screening, method: :delete %>
+</div>

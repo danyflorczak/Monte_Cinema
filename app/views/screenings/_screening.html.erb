@@ -1,0 +1,28 @@
+<div id="<%= dom_id screening %>">
+
+  <p>
+    <strong>Movie:</strong>
+    <%= Movie.find(screening.movie_id).title %>
+  </p>
+
+  <p>
+    <strong>Hall:</strong>
+    <%= Hall.find(screening.hall_id).name %>
+  </p>
+  
+  <p>
+    <strong>Start:</strong>
+    <%= screening.start_time %>
+  </p>
+
+  <p>
+    <strong>End:</strong>
+    <%= screening.end_time %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= screening.price %>
+  </p>
+
+</div>
