@@ -8,6 +8,6 @@ class Hall < ApplicationRecord
   validates :name, uniqueness: true
 
   def seats_arr
-    (1..capacity).to_a
+    (1..capacity).map(&:to_s)
   end
 end
