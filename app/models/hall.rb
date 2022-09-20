@@ -7,7 +7,7 @@ class Hall < ApplicationRecord
   validates :capacity, numericality: { only_integer: true, greater_than: 0 }
   validates :name, uniqueness: true
 
-  def seats_arr
+  def seats
     (1..capacity).map(&:to_s)
   end
 end
