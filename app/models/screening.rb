@@ -10,9 +10,9 @@ class Screening < ApplicationRecord
 
   def available_seats
     taken_seats = []
-    reservations.each do |r|
-      r.tickets.each do |t|
-        taken_seats.push(t.seat)
+    reservations.each do |reservation|
+      reservation.tickets.each do |ticket|
+        taken_seats.push(ticket.seat)
       end
     end
     hall.seats - taken_seats
