@@ -9,12 +9,10 @@ class Screening < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
 
   def available_seats
-    taken_seats = []
+    all_taken_seats = []
     reservations.each do |reservation|
-      reservation.tickets.each do |ticket|
-        taken_seats.push(ticket.seat)
-      end
+      all_taken_seats << reservation.tickets.pluck(:seat)
     end
-    hall.seats - taken_seats
+    hall.seats - all_taken_seats.flatten
   end
 end
