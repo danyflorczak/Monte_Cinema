@@ -7,6 +7,7 @@ class Screening < ApplicationRecord
   validates_associated :movie, :hall
   validates :start_time, :end_time, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
+
   def available_seats
     taken_seats = []
     reservations.each do |r|
@@ -14,6 +15,6 @@ class Screening < ApplicationRecord
         taken_seats.push(t.seat)
       end
     end
-    hall.seats_array - taken_seats
+    hall.seats - taken_seats
   end
 end
