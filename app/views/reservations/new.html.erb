@@ -1,3 +1,6 @@
+<h2><%= @screening.movie.title %></h2>
+<p><%= format_date(@screening.start_time) %></p>
+<p><%= "Hall #{@screening.hall.name}" %></p>
 <%= form_with(url: screening_reservations_path, method: "post") do |f|%>
   <% if @reservation.errors.any? %>
     <div style="color: red">

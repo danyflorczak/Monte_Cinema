@@ -9,10 +9,7 @@ class Screening < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
 
   def available_seats
-    all_taken_seats = []
-    reservations.each do |reservation|
-      all_taken_seats << reservation.tickets.pluck(:seat)
-    end
+    all_taken_seats = reservations.joins(:tickets).where.not(status: :cancelled).pluck(:'tickets.seat')
     hall.seats - all_taken_seats.flatten
   end
 end

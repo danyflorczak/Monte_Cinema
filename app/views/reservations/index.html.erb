@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Reservations</h1>
+
+<div id="reservations">
+  <% @reservations.each do |reservation| %>
+    <%= render partial: 'reservation', locals: {reservation: reservation} %>
+    <%= link_to "Change status",  edit_reservation_path(reservation) %>
+    <%= button_to "Destroy this reservation", reservation, method: :delete %>
+  <% end %>
+</div>
+

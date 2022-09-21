@@ -1,0 +1,30 @@
+<div>
+  <p>
+    <strong>Reservation ID:</strong>
+     <%= reservation.id %>
+  </p>
+
+  <ul>
+    <li>
+        <strong>Movie:</strong>
+        <%= reservation.screening.movie.title %>
+    </li>
+
+    <li>
+        <strong>Hall:</strong>
+        <%=  reservation.screening.hall.name %> 
+    </li>
+
+    <li>
+        <strong>Seat:</strong>
+        <%= reservation.tickets.map(&:seat).join(", ")  %>
+    </li>
+
+
+    <li>
+        <strong>Reservation status:</strong>
+        <%= reservation.status %>
+    </li>
+
+
+</div>
