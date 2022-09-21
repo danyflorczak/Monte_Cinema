@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,61 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_919_184_738) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_21_172804) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'halls', force: :cascade do |t|
-    t.integer 'capacity', null: false
-    t.string 'name', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "halls", force: :cascade do |t|
+    t.integer "capacity", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'movies', force: :cascade do |t|
-    t.string 'title', null: false
-    t.text 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.interval 'duration'
+  create_table "movies", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.interval "duration"
   end
 
-  create_table 'reservations', force: :cascade do |t|
-    t.integer 'status', default: 0, null: false
-    t.bigint 'screening_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['screening_id'], name: 'index_reservations_on_screening_id'
+  create_table "reservations", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.bigint "screening_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["screening_id"], name: "index_reservations_on_screening_id"
   end
 
-  create_table 'screenings', force: :cascade do |t|
-    t.datetime 'start_time', null: false
-    t.datetime 'end_time', null: false
-    t.float 'price'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.bigint 'movie_id', null: false
-    t.bigint 'hall_id', null: false
-    t.index ['hall_id'], name: 'index_screenings_on_hall_id'
-    t.index ['movie_id'], name: 'index_screenings_on_movie_id'
+  create_table "screenings", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "movie_id", null: false
+    t.bigint "hall_id", null: false
+    t.index ["hall_id"], name: "index_screenings_on_hall_id"
+    t.index ["movie_id"], name: "index_screenings_on_movie_id"
   end
 
-  create_table 'tickets', force: :cascade do |t|
-    t.string 'seat', null: false
-    t.bigint 'reservation_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['reservation_id'], name: 'index_tickets_on_reservation_id'
+  create_table "tickets", force: :cascade do |t|
+    t.string "seat", null: false
+    t.bigint "reservation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_tickets_on_reservation_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email', null: false
-    t.string 'name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
-
-  add_foreign_key 'reservations', 'screenings'
-  add_foreign_key 'screenings', 'halls'
-  add_foreign_key 'screenings', 'movies'
+  add_foreign_key "reservations", "screenings"
+  add_foreign_key "screenings", "halls"
+  add_foreign_key "screenings", "movies"
 end
