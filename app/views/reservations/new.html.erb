@@ -1,5 +1,5 @@
 <h2><%= @screening.movie.title %></h2>
-<p><%= "#{@screening.start_time.strftime("%d/%m/%Y %H:%M")}" %></p>
+<p><%= format_date(@screening.start_time) %></p>
 <p><%= "Hall #{@screening.hall.name}" %></p>
 <%= form_with(url: screening_reservations_path, method: "post") do |f|%>
   <% if @reservation.errors.any? %>
