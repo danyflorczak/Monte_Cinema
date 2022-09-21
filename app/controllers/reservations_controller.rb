@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[edit update destroy]
 
   def index
-    @reservations = Reservation.includes(:screening, :tickets)
+    @reservations = Reservation.includes(:tickets, :screening, :movie, :hall)
   end
 
   def new
@@ -47,7 +47,7 @@ class ReservationsController < ApplicationController
   end
 
   def set_reservation
-    @reservation = Reservation.includes(:screening, :tickets).find(params[:id])
+    @reservation = Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
   end
 
   def create_tickets
