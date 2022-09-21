@@ -25,12 +25,12 @@
 
     <li>
         <strong>Hall:</strong>
-        <%= Hall.find(@reservation.screening.hall.id).name %>
+        <%= @reservation.screening.hall.name %>
     </li>
 
     <li>
         <strong>Seat:</strong>
-        <%= @reservation.tickets.map(&:seat).to_s %>
+        <%= @reservation.tickets.map(&:seat).join(", ") %>
     </li>
 
     <li>
