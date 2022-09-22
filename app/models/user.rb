@@ -5,5 +5,5 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  enum role: { client: 0, management: 1 }
+  enum role: { client: 0, manager: 1 }
 end
