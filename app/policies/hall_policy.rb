@@ -1,5 +1,6 @@
-class HallPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class HallPolicy < ApplicationPolicy
   def create?
     manager?
   end
@@ -9,8 +10,8 @@ class HallPolicy < ApplicationPolicy
   end
 
   private
-  
+
   def manager?
-    user.role == "manager"
+    user.role == 'manager'
   end
 end

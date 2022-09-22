@@ -24,14 +24,19 @@
           <%= link_to "Reservations", reservations_path, class: "nav-link"%>
         </li>
       </ul>
+      <% if current_user.present? %>
       <div class="d-flex align-items-center justify-content-end collapse navbar-collapse">
-        <button type="button" class="btn btn-link px-3 me-2">
-          Login
-        </button>
-        <button type="button" class="btn btn-primary me-3">
-          Sign up for free
-        </button>
+        <span class="navbar-text">
+          Hi <%=current_user.email%>
+        </span>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger me-3"%>
       </div>
+      <% else %>
+      <div class="d-flex align-items-center justify-content-end collapse navbar-collapse">
+        <%= link_to "Log In", new_user_session_path, class: "btn btn-link px-3 me-2"%>
+        <%= link_to "Sign Up For Free", new_user_registration_path, class: "btn btn-primary me-3"%>
+      </div>
+      <% end %>
     </div>
   </div>
 </nav>
