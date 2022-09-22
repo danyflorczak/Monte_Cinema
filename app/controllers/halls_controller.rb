@@ -16,6 +16,7 @@ class HallsController < ApplicationController
   def edit; end
 
   def create
+    authorize Hall
     @hall = Hall.new(hall_params)
     if @hall.save
       redirect_to hall_url(@hall), notice: 'Hall was successfully created.'
@@ -40,7 +41,7 @@ class HallsController < ApplicationController
   private
 
   def set_hall
-    @hall = Hall.find(params[:id])
+    @hall = authorize Hall.find(params[:id])
   end
 
   def hall_params
