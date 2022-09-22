@@ -5,15 +5,21 @@ class HallsController < ApplicationController
 
   def index
     @halls = Hall.all
+    authorize Hall
   end
 
-  def show; end
+  def show
+    authorize Hall
+  end
 
   def new
     @hall = Hall.new
+    authorize Hall
   end
 
-  def edit; end
+  def edit
+    authorize Hall
+  end
 
   def create
     authorize Hall
@@ -26,6 +32,7 @@ class HallsController < ApplicationController
   end
 
   def update
+    authorize Hall
     if @hall.update(hall_params)
       redirect_to hall_url(@hall), notice: 'Hall was successfully updated.'
     else
@@ -34,6 +41,7 @@ class HallsController < ApplicationController
   end
 
   def destroy
+    authorize Hall
     @hall.destroy
     redirect_to halls_url, notice: 'Hall was successfully destroyed.'
   end
