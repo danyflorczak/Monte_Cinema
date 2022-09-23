@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
 
   def index
     authorize Reservation
-    @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall)
+    @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user)
   end
 
   def new
