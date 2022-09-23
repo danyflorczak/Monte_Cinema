@@ -5,17 +5,22 @@ class ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[edit update destroy]
 
   def index
-    @reservations = Reservation.includes(:tickets, :screening, :movie, :hall)
+    authorize Reservation
+    @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall)
   end
 
   def new
+    authorize Reservation
     @reservation = Reservation.new
   end
 
-  def edit; end
+  def edit
+    authorize Reservation
+  end
 
   def create
-    @reservation = Reservation.new(screening_id: params[:screening_id], status: :created)
+    authorize Reservation
+    @reservation = Reservation.new(screening_id: params[:screening_id], user_id: current_user.id, status: :created)
 
     if !params.key?(:seats)
       @reservation.errors.add(:base, 'You have to choose at least one seat')
@@ -28,6 +33,7 @@ class ReservationsController < ApplicationController
   end
 
   def update
+    authorize Reservation
     if @reservation.update(reservation_params)
       redirect_to reservations_path, notice: 'Reservation status was successfully updated.'
     else
@@ -36,6 +42,7 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
+    authorize Reservation
     @reservation.destroy
     redirect_to reservations_url, notice: 'Reservation was successfully deleted.'
   end
@@ -47,7 +54,7 @@ class ReservationsController < ApplicationController
   end
 
   def set_reservation
-    @reservation = Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
+    @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
   end
 
   def create_tickets
@@ -57,6 +64,6 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:screening_id, :ticket_id, :status)
+    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status)
   end
 end
