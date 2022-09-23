@@ -2,6 +2,7 @@
 
 class HallsController < ApplicationController
   before_action :set_hall, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   def index
     @halls = Hall.all
