@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HallPolicy < ApplicationPolicy
+class ScreeningPolicy < ApplicationPolicy
   def index?
     manager?
   end
@@ -10,7 +10,7 @@ class HallPolicy < ApplicationPolicy
   end
 
   def new?
-    manager?
+    manager? || client?
   end
 
   def edit?
@@ -22,7 +22,7 @@ class HallPolicy < ApplicationPolicy
   end
 
   def create?
-    manager?
+    manager? || client?
   end
 
   def update?
@@ -33,5 +33,9 @@ class HallPolicy < ApplicationPolicy
 
   def manager?
     user.role == 'manager'
+  end
+
+  def client?
+    user.role == 'client'
   end
 end

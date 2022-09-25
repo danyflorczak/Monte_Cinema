@@ -13,11 +13,6 @@
     <%= movie.duration %>
   </p>
 
-  <p>
-    <strong>Time:</strong>
-    <%= movie.duration %>
-  </p>
-
   <% @screenings.each do |screening| %>
     <% if screening.movie_id == movie.id %>
       <p> <%= link_to "#{screening.start_time.strftime("%d/%m/%Y %H:%M")}", new_screening_reservation_url(screening.id) %>
