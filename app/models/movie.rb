@@ -6,6 +6,6 @@ class Movie < ApplicationRecord
   validates_associated :screenings, :halls
   validates :title, :description, :duration, presence: true
   validates :title, length: { maximum: 255, too_long: '%<count>s characters is the maximum allowed' }
-  validates :description, length: { maximum: 30_000, too_long: '%<count>s characters is the maximum allowed' }
+  validates :description, length: { maximum: 1000, too_long: '%<count>s characters is the maximum allowed' }
   validates :duration, numericality: { only_integer: true, greater_than: 0 }
 end
