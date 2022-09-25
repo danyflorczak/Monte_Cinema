@@ -1,10 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Movies</h1>
-
+<%= create_date_links %>
 <div id="movies">
   <% @movies.each do |movie| %>
     <%= render movie %>
+    <% @screenings.each do |screening| %>
+      <% if screening.movie_id == movie.id && which_day?(screening) %>
+        <p> <%= button_to "#{date_to_hours(screening.start_time)}", new_screening_reservation_url(screening.id), method: :get, class: "btn btn-warning" %>
+     <%end%>
+  <%end%>
     <p>
       <%= link_to "Show this movie", movie %>
     </p>
