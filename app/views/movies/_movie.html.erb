@@ -1,16 +1,16 @@
 <div id="<%= dom_id movie %>">
-  <p>
-    <strong>Title:</strong>
-    <%= movie.title %>
-  </p>
-  <p>
-    <strong>Description:</strong>
-    <%= movie.description %>
-  </p>
-
-  <p>
-    <strong>Time:</strong>
-    <%= movie.duration %> min
-  </p>
-
+  <div class="card" style="width: 30rem;">
+    <div class="card-body">
+      <h5 class="card-title"><%= movie.title %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= movie.duration %> min</h6>
+      <p class="card-text"><%= movie.description %></p>
+      <div class="d-flex flex-row">
+      <% @screenings.each do |screening| %>
+        <% if screening.movie_id == movie.id && which_day?(screening) %>
+          <%= button_to "#{date_to_hours(screening.start_time)}", new_screening_reservation_url(screening.id), method: :get, class: "btn btn-warning m-2" %>
+        <%end%>
+      <%end%>
+      </div>
+    </div>
+  </div>
 </div>
