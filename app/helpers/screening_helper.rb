@@ -4,7 +4,7 @@ module ScreeningHelper
   def create_date_links
     content_tag(:ul, class: 'd-flex mb-3') do
       7.times do |num|
-        concat(link_to((Time.zone.today + num.days).strftime('%d/%m'),
+        concat(link_to((Time.zone.today + num.days).strftime('%a %d/%m'),
                        movies_path(start_time: Time.zone.today + num.days), class: 'mx-2'))
       end
     end
