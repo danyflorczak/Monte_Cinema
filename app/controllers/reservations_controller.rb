@@ -20,20 +20,20 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    @reservation = Reservation.new(screening_id: params[:screening_id], user_id: current_user.id, status: :created)
+    
+    @reservation = Reservation.new(screening_id: params[:screening_id],user_id: current_user.id, status: :created)
 
-    Reservation.transaction do
-      @reservation.save!
-      create_tickets
-    rescue StandardError
+    if CreateReservation.new(@reservation, params).call
+      redirect_to movies_path, notice: 'Reservation successfully created'
+    else
       @reservation.errors.add(:base, 'You have to choose at least one seat')
       render :new, status: :unprocessable_entity and return
     end
-    redirect_to movies_path, notice: 'Reservation successfully created'
   end
 
   def update
     authorize Reservation
+
     if @reservation.update(reservation_params)
       redirect_to reservations_path, notice: 'Reservation status was successfully updated.'
     else
@@ -43,6 +43,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     authorize Reservation
+
     @reservation.destroy
     redirect_to reservations_url, notice: 'Reservation was successfully deleted.'
   end
@@ -55,12 +56,6 @@ class ReservationsController < ApplicationController
 
   def set_reservation
     @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
-  end
-
-  def create_tickets
-    params[:seats].each do |seat|
-      @reservation.tickets.create(seat:)
-    end
   end
 
   def reservation_params
