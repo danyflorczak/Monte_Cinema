@@ -23,14 +23,14 @@ class ReservationsController < ApplicationController
     authorize Reservation
     @reservation = Reservation.new(screening_id: params[:screening_id], user_id: current_user.id, status: :created)
 
-    if !params.key?(:seats)
-      @reservation.errors.add(:base, 'You have to choose at least one seat')
-      render :new, status: :unprocessable_entity
-    else
-      @reservation.save
+    Reservation.transaction do
+      @reservation.save!
       create_tickets
-      redirect_to movies_path, notice: 'Reservation successfully created'
+    rescue StandardError
+      @reservation.errors.add(:base, 'You have to choose at least one seat')
+      render :new, status: :unprocessable_entity and return
     end
+    redirect_to movies_path, notice: 'Reservation successfully created'
   end
 
   def update
@@ -60,7 +60,7 @@ class ReservationsController < ApplicationController
 
   def create_tickets
     params[:seats].each do |seat|
-      Ticket.create(reservation_id: @reservation.id, seat:)
+      @reservation.tickets.create(seat:)
     end
   end
 
