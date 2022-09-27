@@ -2,12 +2,12 @@
 
   <p>
     <strong>Movie:</strong>
-    <%= Movie.find(screening.movie_id).title %>
+    <%= screening.movie.title %>
   </p>
 
   <p>
     <strong>Hall:</strong>
-    <%= Hall.find(screening.hall_id).name %>
+    <%= screening.hall.name %>
   </p>
   
   <p>
