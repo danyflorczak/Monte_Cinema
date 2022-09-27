@@ -13,6 +13,6 @@ module ScreeningHelper
 
   def which_day?(screening)
     link_date = params[:start_time] || DateTime.now.strftime('%Y-%m-%d')
-    obj.start_time.strftime('%Y-%m-%d') == link_date
+    screening.start_time.strftime('%Y-%m-%d') == link_date
   end
 end
