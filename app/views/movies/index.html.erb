@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Movies</h1>
-
+<%= create_date_links %>
 <div id="movies">
   <% @movies.each do |movie| %>
     <%= render movie %>
