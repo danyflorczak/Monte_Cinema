@@ -5,8 +5,8 @@ class ScreeningsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @screenings = Screening.includes(:movie_id, :hall_id, :start_time, :end_time, :price)
     authorize Screening
+    @screenings = Screening.includes(:movie, :hall)
   end
 
   def show
