@@ -254,14 +254,14 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  brakeman
+  brakeman (~> 5.3.1)
   capybara
   debug
   devise (~> 4.8, >= 4.8.1)
   faker (~> 2.23)
   importmap-rails
   jbuilder
-  lefthook
+  lefthook (~> 1.1.1)
   pg (~> 1.1)
   puma (~> 5.0)
   pundit (~> 2.2)
