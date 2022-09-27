@@ -56,3 +56,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+#For seeds
+gem 'faker', '~> 2.23'
