@@ -6,7 +6,6 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    authorize Reservation
     @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user)
   end
 
