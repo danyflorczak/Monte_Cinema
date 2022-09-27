@@ -2,7 +2,7 @@
 
 class MoviePolicy < ApplicationPolicy
   def index?
-    manager? || client?
+    true
   end
 
   def show?
