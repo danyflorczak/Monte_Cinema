@@ -31,6 +31,10 @@ class ReservationPolicy < ApplicationPolicy
     manager? || client?
   end
 
+  def create_at_desk?
+    manager?
+  end
+
   def update?
     manager?
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
-  before_action :set_screening, only: %i[new create]
+  before_action :set_screening, only: %i[new create create_at_desk]
   before_action :set_reservation, only: %i[edit update destroy]
   before_action :authenticate_user!
 
@@ -21,6 +21,18 @@ class ReservationsController < ApplicationController
   def create
     authorize Reservation
     reservation = CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
+
+    if reservation.call
+      redirect_to movies_path, notice: 'Reservation successfully created'
+    else
+      redirect_back fallback_location: new_screening_reservation_path(@screening),
+                    alert: 'You have to chose at least one seat'
+    end
+  end
+
+  def create_at_desk
+    authorize Reservation
+    reservation = CreateAtDesk.new(params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'

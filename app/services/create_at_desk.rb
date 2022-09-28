@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-class CreateReservation
-  def initialize(user_id, screening_id, seats)
-    @user_id = user_id
+class CreateAtDesk
+  def initialize(screening_id, seats)
     @screening_id = screening_id
     @seats = seats
-    @reservation = Reservation.new(screening_id:, user_id:)
+    @reservation = Reservation.new(screening_id:, status: :confirmed)
   end
 
   def call

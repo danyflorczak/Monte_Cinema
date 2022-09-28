@@ -3,10 +3,12 @@
     <strong>Reservation ID:</strong>
      <%= reservation.id %>
   </p>
-  <p>
-    <strong>Owner</strong>
-     <%= reservation.user.email %>
-  </p>
+  <% if reservation.user %>
+    <p>
+        <strong>Owner</strong>
+        <%= reservation.user.email %>
+    </p>
+  <% end %>
   <ul>
     <li>
         <strong>Movie:</strong>

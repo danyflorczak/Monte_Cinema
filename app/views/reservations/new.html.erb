@@ -14,6 +14,10 @@
      </div>
    <% end %>
    <div class = "d-flex justify-content-center form-group ">
-     <%= f.submit 'Book a ticket', class: "btn btn-primary m-3" %>
+    <% if current_user.manager? %>
+       <%= f.submit 'Book offline reservation', formaction: reservation_at_desk_path, class: "btn btn-info m-3" %>
+     <%else%>
+        <%= f.submit 'Book a ticket', class: "btn btn-primary m-3" %>
+     <%end%>
    </div>
 <% end %>

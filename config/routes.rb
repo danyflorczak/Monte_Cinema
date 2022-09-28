@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :movies
   resources :halls
   resources :reservations, excep: %i[show new create]
+  post 'screenings/:screening_id/reservations/at_desk', to: 'reservations#create_at_desk', as: 'reservation_at_desk'
 end
