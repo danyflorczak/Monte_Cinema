@@ -23,6 +23,8 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  # For seeds
+  gem 'faker', '~> 2.23'
 end
 
 group :development do
@@ -38,5 +40,4 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-# For seeds
-gem 'faker', '~> 2.23'
+
