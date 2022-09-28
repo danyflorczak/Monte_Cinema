@@ -1,6 +1,6 @@
 <% if obj.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(obj.errors.count, "error") %> prohibited this screening from being saved:</h2>
+      <h2><%= pluralize(obj.errors.count, "error") %> prohibited this object from being saved:</h2>
 
       <ul>
         <% obj.errors.each do |error| %>
