@@ -1,32 +1,39 @@
 # frozen_string_literal: true
 
 class CreateReservation
+
+  def initialize(user_id, screening_id, seats)
+    @user_id = user_id
+    @screening_id = screening_id
+    @seats = seats
+  end
+
   def call
     return false unless seats_selected?
-
-    ActiveRecord::Base.transaction do
-      reservation.save!
-      create_tickets
-    rescue StandardError
-    end
+      ActiveRecord::Base.transaction do
+        reservation.save!
+        create_tickets
+      end
   end
 
   private
 
-  attr_reader :reservation, :params
+  attr_reader :user_id, :screening_id, :seats
 
-  def initialize(reservation, params)
-    @reservation = reservation
-    @params = params
+  def reservation
+    Reservation.create(
+      user_id: user_id,
+      screening_id: screening_id
+    )
   end
 
   def create_tickets
-    params[:seats].each do |seat|
-      reservation.tickets.create(seat:)
+    seats.each do |seat|
+      reservation.tickets.create(seat: seat)
     end
   end
 
   def seats_selected?
-    !params[:seats].nil?
+    !seats.nil?
   end
 end

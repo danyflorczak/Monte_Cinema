@@ -20,14 +20,12 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
+    reservation = CreateReservation.new(current_user.id,params[:screening_id], params[:seats])
 
-    @reservation = Reservation.new(screening_id: params[:screening_id], user_id: current_user.id, status: :created)
-
-    if CreateReservation.new(@reservation, params).call
+    if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
     else
-      @reservation.errors.add(:base, 'You have to choose at least one seat')
-      render :new, status: :unprocessable_entity and return
+      redirect_back fallback_location: new_screening_reservation_path(@screening), alert: "You have to chose at least one seat"
     end
   end
 
@@ -59,6 +57,6 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status)
+    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status, :seats)
   end
 end
