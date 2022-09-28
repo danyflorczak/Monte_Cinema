@@ -22,7 +22,7 @@ end
   Screening.create(
     movie_id: Movie.all.sample.id,
     hall_id: Hall.all.sample.id,
-    start_time: rand(DateTime.current .. DateTime.current + 7.days),
+    start_time: rand(DateTime.current..DateTime.current + 7.days),
     price: rand(15..24)
   )
 end

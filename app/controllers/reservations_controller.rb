@@ -20,12 +20,13 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = CreateReservation.new(current_user.id,params[:screening_id], params[:seats])
+    reservation = CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
     else
-      redirect_back fallback_location: new_screening_reservation_path(@screening), alert: "You have to chose at least one seat"
+      redirect_back fallback_location: new_screening_reservation_path(@screening),
+                    alert: 'You have to chose at least one seat'
     end
   end
 
