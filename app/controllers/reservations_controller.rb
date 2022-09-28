@@ -6,7 +6,6 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    authorize Reservation
     @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user)
   end
 
@@ -21,20 +20,19 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    @reservation = Reservation.new(screening_id: params[:screening_id], user_id: current_user.id, status: :created)
+    reservation = CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
 
-    if !params.key?(:seats)
-      @reservation.errors.add(:base, 'You have to choose at least one seat')
-      render :new, status: :unprocessable_entity
-    else
-      @reservation.save
-      create_tickets
+    if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
+    else
+      redirect_back fallback_location: new_screening_reservation_path(@screening),
+                    alert: 'You have to chose at least one seat'
     end
   end
 
   def update
     authorize Reservation
+
     if @reservation.update(reservation_params)
       redirect_to reservations_path, notice: 'Reservation status was successfully updated.'
     else
@@ -44,6 +42,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     authorize Reservation
+
     @reservation.destroy
     redirect_to reservations_url, notice: 'Reservation was successfully deleted.'
   end
@@ -58,13 +57,7 @@ class ReservationsController < ApplicationController
     @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
   end
 
-  def create_tickets
-    params[:seats].each do |seat|
-      Ticket.create(reservation_id: @reservation.id, seat:)
-    end
-  end
-
   def reservation_params
-    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status)
+    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status, :seats)
   end
 end

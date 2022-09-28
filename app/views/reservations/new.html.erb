@@ -2,16 +2,6 @@
 <p><%= format_date(@screening.start_time) %></p>
 <p><%= "Hall #{@screening.hall.name}" %></p>
 <%= form_with(url: screening_reservations_path, method: "post") do |f|%>
-  <% if @reservation.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@reservation.errors.count, "error") %></h2>
-      <ul>
-        <% @reservation.errors.full_messages.each do |error|%>
-          <li> <%= error %> </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
     <% @screening.hall.seats.each do |seat| %>
      <div class="form-check form-check-inline m-2">
        <%if @screening.available_seats.include?(seat)%>

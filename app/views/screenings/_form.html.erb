@@ -1,16 +1,5 @@
 <%= form_with(model: screening) do |form| %>
-  <% if screening.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
-
-      <ul>
-        <% screening.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render "shared/errors" , obj: @screening %>
   <div class="field">
     <%= form.label "Movie:" %>
     <%= form.select(:movie_id, Movie.all.collect {|c| [c.title, c.id ]}, { :include_blank => 'Select' }) %>
