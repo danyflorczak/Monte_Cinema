@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Reservations
   class CancelReservation
     def initialize(reservation)
