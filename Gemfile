@@ -31,7 +31,7 @@ end
 
 group :development do
   gem 'web-console'
-
+  gem 'bullet', '~> 7.0', '>= 7.0.3'
   gem 'brakeman', '~> 5.3.1'
   gem 'lefthook', '~> 1.1.1'
   gem 'rubocop', '~> 1.36', require: false
