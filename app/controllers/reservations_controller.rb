@@ -2,7 +2,7 @@
 
 class ReservationsController < ApplicationController
   before_action :set_screening, only: %i[new create create_at_desk]
-  before_action :set_reservation, only: %i[edit update destroy]
+  before_action :set_reservation, only: %i[confirm cancel]
   before_action :authenticate_user!
 
   def index
@@ -12,10 +12,6 @@ class ReservationsController < ApplicationController
   def new
     authorize Reservation
     @reservation = Reservation.new
-  end
-
-  def edit
-    authorize Reservation
   end
 
   def create
@@ -42,21 +38,22 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def update
-    authorize Reservation
-
-    if @reservation.update(reservation_params)
-      redirect_to reservations_path, notice: 'Reservation status was successfully updated.'
+  def cancel
+    cancelation = CancelReservation.new(@reservation)
+    if cancelation.call
+      redirect_to reservations_path, notice: 'Reservation canceled'
     else
-      render :edit, status: :unprocessable_entity
+      redirect_back fallback_location: reservations_path, alert: "Confirmed reservations can't be canceled!"
     end
   end
 
-  def destroy
-    authorize Reservation
-
-    @reservation.destroy
-    redirect_to reservations_url, notice: 'Reservation was successfully deleted.'
+  def confirm
+    confirmation = ConfirmReservation.new(@reservation)
+    if confirmation.call
+      redirect_to reservations_path, notice: 'Reservation confirmed'
+    else
+      redirect_back fallback_location:, alert: "Canceled reservations can't be confirmed!"
+    end
   end
 
   private
@@ -66,7 +63,7 @@ class ReservationsController < ApplicationController
   end
 
   def set_reservation
-    @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:id])
+    @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
   end
 
   def reservation_params

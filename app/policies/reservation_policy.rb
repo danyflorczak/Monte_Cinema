@@ -12,18 +12,18 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    manager? || client?
   end
 
   def new?
     manager? || client?
   end
 
-  def edit?
-    manager?
+  def cancel?
+    client?
   end
 
-  def destroy?
+  def confirm?
     manager?
   end
 
@@ -32,10 +32,6 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def create_at_desk?
-    manager?
-  end
-
-  def update?
     manager?
   end
 

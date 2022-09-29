@@ -3,8 +3,8 @@
 <div id="reservations">
   <% @reservations.each do |reservation| %>
     <%= render partial: 'reservation', locals: {reservation: reservation} %>
-    <%= link_to "Change status",  edit_reservation_path(reservation) %>
-    <%= button_to "Destroy this reservation", reservation, method: :delete %>
+    <%= button_to "Cancel Reservation", cancel_reservation_path(reservation), method: :patch, class: "btn btn-danger m-2" %>
+    <%= button_to "Confirm Reservation", confirm_reservation_path(reservation), method: :patch, class: "btn btn-success m-2" %>
   <% end %>
 </div>
 
