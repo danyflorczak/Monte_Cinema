@@ -9,7 +9,8 @@ module Reservations
     def call
       return false unless booked?
 
-      reservation.update(status: :canceled)
+      reservation.canceled!
+      reservation.tickets.destroy_all
     end
 
     private
