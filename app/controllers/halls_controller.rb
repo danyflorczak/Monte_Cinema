@@ -24,9 +24,10 @@ class HallsController < ApplicationController
 
   def create
     authorize Hall
-    @hall = Hall.new(hall_params)
-    if @hall.save
-      redirect_to hall_url(@hall), notice: 'Hall was successfully created.'
+    @hall = ::Halls::Create.new(hall_params).call
+
+    if @hall.valid?
+      redirect_to hall_url(@hall), notice: "Hall was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,16 +35,19 @@ class HallsController < ApplicationController
 
   def update
     authorize Hall
-    if @hall.update(hall_params)
-      redirect_to hall_url(@hall), notice: 'Hall was successfully updated.'
-    else
+    @hall = ::Halls::Update.new(params[:id], hall_params).call
+
+    if @hall.errors.any?
       render :edit, status: :unprocessable_entity
+    else
+      redirect_to hall_url(@hall), notice: "Hall was successfully updated."
     end
   end
 
   def destroy
     authorize Hall
-    @hall.destroy
+    ::Halls::Delete.new(params[:id]).call
+
     redirect_to halls_url, notice: 'Hall was successfully destroyed.'
   end
 
