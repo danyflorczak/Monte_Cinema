@@ -15,7 +15,7 @@
           <%= link_to "Movies", movies_path, class: "nav-link"%>
         </li>
         <% if current_user.present? %>
-          <% if current_user.role == 'manager' %>
+          <% if manager? %>
             <li class="nav-item">
               <%= link_to "Halls", halls_path, class: "nav-link"%>
             </li>
