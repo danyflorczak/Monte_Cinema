@@ -12,7 +12,6 @@ gem 'rails', '~> 7.0.3'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'simplecov', '~> 0.21.2', require: false, group: :test
 
 # User Authentication
 gem 'devise', '~> 4.8', '>= 4.8.1'
@@ -25,6 +24,7 @@ gem 'bootsnap', require: false
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
+  gem 'factory_bot_rails', '~> 6.2'
   # For seeds
   gem 'faker', '~> 2.23'
 end
@@ -41,4 +41,5 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'simplecov', '~> 0.21.2', require: false
 end
