@@ -18,11 +18,11 @@ end
   )
 end
 
-100.times do
+200.times do
   Screening.create(
     movie_id: Movie.all.sample.id,
     hall_id: Hall.all.sample.id,
-    start_time: rand(DateTime.current..DateTime.current + 7.days),
+    start_time: DateTime.current.beginning_of_minute + rand(7).days + rand(24).hours + rand(60).minutes,
     price: rand(15..24)
   )
 end
