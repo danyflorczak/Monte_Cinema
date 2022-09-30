@@ -50,7 +50,7 @@ class ScreeningsController < ApplicationController
   private
 
   def set_screening
-    @screening = authorize Screening.find(params[:id])
+    @screening = Screening.find(params[:id])
   end
 
   def screening_params

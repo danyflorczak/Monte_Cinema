@@ -5,8 +5,8 @@ class HallsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @halls = Hall.all
     authorize Hall
+    @halls = Hall.all
   end
 
   def show
@@ -14,8 +14,8 @@ class HallsController < ApplicationController
   end
 
   def new
-    @hall = Hall.new
     authorize Hall
+    @hall = Hall.new
   end
 
   def edit
@@ -24,8 +24,9 @@ class HallsController < ApplicationController
 
   def create
     authorize Hall
-    @hall = Hall.new(hall_params)
-    if @hall.save
+    @hall = ::Halls::Create.new(hall_params).call
+
+    if @hall.valid?
       redirect_to hall_url(@hall), notice: 'Hall was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -34,23 +35,26 @@ class HallsController < ApplicationController
 
   def update
     authorize Hall
-    if @hall.update(hall_params)
-      redirect_to hall_url(@hall), notice: 'Hall was successfully updated.'
-    else
+    @hall = ::Halls::Update.new(params[:id], hall_params).call
+
+    if @hall.errors.any?
       render :edit, status: :unprocessable_entity
+    else
+      redirect_to hall_url(@hall), notice: 'Hall was successfully updated.'
     end
   end
 
   def destroy
     authorize Hall
-    @hall.destroy
+    ::Halls::Delete.new(params[:id]).call
+
     redirect_to halls_url, notice: 'Hall was successfully destroyed.'
   end
 
   private
 
   def set_hall
-    @hall = authorize Hall.find(params[:id])
+    @hall = Hall.find(params[:id])
   end
 
   def hall_params

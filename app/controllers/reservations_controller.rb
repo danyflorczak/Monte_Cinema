@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
+    reservation = ::Reservations::CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -28,7 +28,7 @@ class ReservationsController < ApplicationController
 
   def create_at_desk
     authorize Reservation
-    reservation = CreateAtDesk.new(params[:screening_id], params[:seats])
+    reservation = ::Reservations::CreateAtDesk.new(params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -39,7 +39,7 @@ class ReservationsController < ApplicationController
   end
 
   def cancel
-    cancelation = CancelReservation.new(@reservation)
+    cancelation = ::Reservations::CancelReservation.new(@reservation)
     if cancelation.call
       redirect_to reservations_path, notice: 'Reservation canceled'
     else
@@ -48,7 +48,7 @@ class ReservationsController < ApplicationController
   end
 
   def confirm
-    confirmation = ConfirmReservation.new(@reservation)
+    confirmation = ::Reservations::ConfirmReservation.new(@reservation)
     if confirmation.call
       redirect_to reservations_path, notice: 'Reservation confirmed'
     else
@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
   end
 
   def set_reservation
-    @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
+    @reservation = Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
   end
 
   def reservation_params

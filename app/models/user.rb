@@ -7,6 +7,4 @@ class User < ApplicationRecord
   has_many :reservations
   validates :email, presence: true
   validates :email, uniqueness: true
-  validates :password, length: { minimum: 8, maximum: 72 }, unless: :password.nil?
-  validates :password, presence: true, if: :id.nil?
 end
