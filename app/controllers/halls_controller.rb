@@ -5,8 +5,8 @@ class HallsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @halls = Hall.all
     authorize Hall
+    @halls = Hall.all
   end
 
   def show
@@ -14,8 +14,8 @@ class HallsController < ApplicationController
   end
 
   def new
-    @hall = Hall.new
     authorize Hall
+    @hall = Hall.new
   end
 
   def edit
@@ -54,7 +54,7 @@ class HallsController < ApplicationController
   private
 
   def set_hall
-    @hall = authorize Hall.find(params[:id])
+    @hall = Hall.find(params[:id])
   end
 
   def hall_params

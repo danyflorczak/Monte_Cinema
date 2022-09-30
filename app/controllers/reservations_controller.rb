@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
   end
 
   def set_reservation
-    @reservation = authorize Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
+    @reservation = Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
   end
 
   def reservation_params

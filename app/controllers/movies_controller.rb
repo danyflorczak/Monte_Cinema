@@ -2,6 +2,7 @@
 
 class MoviesController < ApplicationController
   before_action :set_movie, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     authorize Movie
