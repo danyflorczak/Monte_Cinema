@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'faker'
 
 RSpec.describe Halls::Update do
   let!(:hall) { create :hall, name: 'name', capacity: 40 }
@@ -10,15 +11,14 @@ RSpec.describe Halls::Update do
       capacity: 41
     }
   end
-  let(:name) { 'name updated' }
-  let(:instance) { described_class.new(hall.id, params) }
+  let(:name) { Faker::Name.name }
 
-  subject { instance.call }
+  subject { described_class.new(hall.id, params).call }
 
   describe '.call' do
     it 'updates hall' do
       expect { subject }
-        .to change { hall.reload.name }.from('name').to('name updated')
+        .to change { hall.reload.name }.from('name').to(name)
         .and change { hall.reload.capacity }.from(40).to(41)
     end
 
