@@ -7,7 +7,7 @@ module Reservations
     end
 
     def call
-      return false unless booked?
+      return false unless reservation.booked?
 
       reservation.update(status: :confirmed)
     end
@@ -16,8 +16,5 @@ module Reservations
 
     attr_reader :reservation
 
-    def booked?
-      reservation.status == 'booked'
-    end
   end
 end
