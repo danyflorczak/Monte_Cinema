@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Halls
   class Delete
     def initialize(hall_id)

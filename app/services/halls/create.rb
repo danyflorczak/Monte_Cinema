@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Halls
   class Create
     def initialize(params)
