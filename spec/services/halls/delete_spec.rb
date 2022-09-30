@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Halls::Delete do
-  let!(:hall) { create :hall, name: 'name', capacity: 30 }
+  let!(:hall) { create :hall }
   let(:instance) { described_class.new(hall.id) }
 
   subject { instance.call }

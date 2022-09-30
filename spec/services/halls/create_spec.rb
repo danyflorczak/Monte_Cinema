@@ -9,11 +9,11 @@ RSpec.describe Halls::Create do
       capacity: 100
     }
   end
-  let(:instance) { described_class.new(params) }
+  subject { described_class.new(params).call }
 
   describe '.call' do
     it 'creates hall' do
-      expect { instance.call }.to change { Hall.count }.by(1)
+      expect { subject }.to change { Hall.count }.by(1)
     end
   end
 end

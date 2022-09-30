@@ -22,9 +22,7 @@ RSpec.describe Halls::Update do
         .and change { hall.reload.capacity }.from(40).to(41)
     end
 
-    it 'retuns hall object' do
-      expect(subject).to eq(hall)
-    end
+    it { is_expected.to eq(hall) }
 
     it 'returns hall object without errors' do
       expect(subject.errors).to be_empty
