@@ -15,6 +15,5 @@ module Reservations
     private
 
     attr_reader :reservation
-
   end
 end
