@@ -32,18 +32,31 @@ class ScreeningsController < ApplicationController
     end
   end
 
+  def create
+    authorize Screening
+    @screening = ::Screenings::Create.new(screening_params).call
+    if @screening.errors.any?
+      render :new, status: :unprocessable_entity
+    else
+      redirect_to screening_url(@screening), notice: 'Screening was successfully created.'
+    end
+  end
+
   def update
     authorize Screening
-    if @screening.update(screening_params)
-      redirect_to screening_url(@screening), notice: 'Screening was successfully updated.'
-    else
+    @screening = ::Screenings::Update.new(params[:id], screening_params).call
+
+    if @screening.errors.any?
       render :edit, status: :unprocessable_entity
+    else
+      redirect_to screening_url(@screening), notice: 'Screening was successfully updated.'
     end
   end
 
   def destroy
     authorize Screening
-    @screening.destroy
+    ::Screenings::Delete.new(params[:id]).call
+
     redirect_to screenings_url, notice: 'Screening was successfully destroyed.'
   end
 
