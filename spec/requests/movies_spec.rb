@@ -5,10 +5,9 @@ require 'rails_helper'
 RSpec.describe '/movies', type: :request do
   let(:user) { create :user }
   let(:manager) { create :user, email: 'manager@gmail.com', role: :manager }
+  before { request }
   describe 'GET /movies' do
     subject(:request) { get movies_url }
-
-    before { request }
 
     it 'returns successful response' do
       expect(response).to be_successful
@@ -20,14 +19,12 @@ RSpec.describe '/movies', type: :request do
   end
 
   describe 'GET /movies/movie_id' do
-    let(:movie) { create :movie }
+     let(:movie) { create :movie }
+    subject(:request) { get("/movies/#{movie.id}") }
     it 'returns successful response' do
-      get("/movies/#{movie.id}")
       expect(response.status).to eq(200)
     end
-
     it 'renders proper template' do
-      get("/movies/#{movie.id}")
       expect(response).to render_template('movies/show')
     end
   end
@@ -149,7 +146,6 @@ RSpec.describe '/movies', type: :request do
         expect(response.status).to eq(422)
       end
 
-      let(:duration) { Faker::Number.number(digits: 2).to_i }
       let(:title) { nil }
 
       it "doesn't create movie" do
@@ -267,7 +263,7 @@ RSpec.describe '/movies', type: :request do
       before { sign_in manager }
       let(:duration) { 'some string' }
 
-      it "doesn't create movie" do
+      it "doesn't update movie" do
         expect { patch("/movies/#{movie.id}", params:) }.not_to(change { movie.reload.title })
       end
 
@@ -279,7 +275,7 @@ RSpec.describe '/movies', type: :request do
       let(:duration) { Faker::Number.number(digits: 2).to_i }
       let(:title) { nil }
 
-      it "doesn't create movie" do
+      it "doesn't update movie" do
         expect { patch("/movies/#{movie.id}", params:) }.not_to(change { movie.reload.title })
       end
 
@@ -330,8 +326,9 @@ RSpec.describe '/movies', type: :request do
       end
 
       it 'destroy movie' do
-        expect { delete("/movies/#{movie.id}") }.not_to change(Movie, :count)
+        expect { delete("/movies/#{movie.id}") }.to change { Movie.count }.by(-1)
       end
+      
     end
   end
 end
