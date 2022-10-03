@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'faker'
 
 RSpec.describe Halls::Update do
   let!(:hall) { create :hall, name: 'name', capacity: 40 }

@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :movie do
-    title { 'My title' }
-    description { 'My description' }
-    duration { 120 }
+    title { Faker::Movie.title }
+    description { Faker::Movie.quote }
+    duration { Faker::Number.number(digits: 2).to_i }
   end
 end

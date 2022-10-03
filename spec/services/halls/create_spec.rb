@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Halls::Create do
   let(:params) do
     {
-      name: 'name',
-      capacity: 100
+      name: Faker::FunnyName.name,
+      capacity: Faker::Number.number(digits: 2)
     }
   end
   subject { described_class.new(params).call }
