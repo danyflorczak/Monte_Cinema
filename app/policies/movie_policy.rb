@@ -6,7 +6,7 @@ class MoviePolicy < ApplicationPolicy
   end
 
   def show?
-    manager? || client?
+    true
   end
 
   def new?
