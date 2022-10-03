@@ -45,6 +45,6 @@ group :test do
   gem 'webdrivers'
 end
 
-gem "sidekiq", "~> 6.5"
-gem "redis", "~> 4.8"
+gem 'redis', '~> 4.8'
+gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-cron', '~> 1.7'
