@@ -3,7 +3,7 @@
 class ReservationCancelJob < ApplicationJob
   queue_as :default
 
-  def perform(*_args)
+  def perform
     reservations = Reservation.booked
     half_hour_before_screening = DateTime.now - 30.minutes
     reservations.map do |reservation|
