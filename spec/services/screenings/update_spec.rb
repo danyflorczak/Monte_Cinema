@@ -9,7 +9,7 @@ RSpec.describe Screenings::Update do
       movie_id: screening.movie.id,
       hall_id: screening.hall.id,
       start_time: DateTime.current.beginning_of_minute,
-      price: 
+      price:
     }
   end
   let(:price) { rand(15..24) }
@@ -39,10 +39,6 @@ RSpec.describe Screenings::Update do
 
       it 'returns screening object with errors array not empty' do
         expect(subject.errors).not_to be_empty
-      end
-
-      it 'returns screening object with proper errors' do
-        expect(subject.errors).to match_array(["Price can't be blank", "Price is not a number"])
       end
     end
   end
