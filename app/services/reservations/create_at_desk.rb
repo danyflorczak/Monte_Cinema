@@ -5,7 +5,7 @@ module Reservations
     def initialize(screening_id, seats)
       @screening_id = screening_id
       @seats = seats
-      @reservation = Reservation.new(screening_id:, status: :confirmed)
+      @reservation = Reservation.new(screening_id:, status: :confirmed, email: "Created at desk")
     end
 
     def call

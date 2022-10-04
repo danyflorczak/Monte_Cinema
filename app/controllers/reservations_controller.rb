@@ -16,7 +16,7 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = ::Reservations::CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
+    reservation = ::Reservations::CreateReservation.new(current_user.id, current_user.email, params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -67,6 +67,6 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status, :seats)
+    params.require(:reservation).permit(:screening_id, :user_id, :email, :ticket_id, :status, :seats)
   end
 end
