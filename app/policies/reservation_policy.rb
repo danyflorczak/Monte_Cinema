@@ -16,7 +16,7 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def new?
-    manager? || client?
+    true
   end
 
   def cancel?
@@ -28,7 +28,11 @@ class ReservationPolicy < ApplicationPolicy
   end
 
   def create?
-    manager? || client?
+    client? || manager?
+  end
+
+  def create_without_registration?
+    true
   end
 
   def create_at_desk?
