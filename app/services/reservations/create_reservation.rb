@@ -2,7 +2,7 @@
 
 module Reservations
   class CreateReservation
-    def initialize(user_id,email, screening_id, seats)
+    def initialize(user_id, email, screening_id, seats)
       @user_id = user_id
       @email = email
       @screening_id = screening_id

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module Reservations
-  class CreateAtDesk
-    def initialize(screening_id, seats)
+  class CreateWithoutRegistration
+    def initialize(email, screening_id, seats)
+      @email = email
       @screening_id = screening_id
       @seats = seats
-      @reservation = Reservation.new(screening_id:, status: :confirmed, email: 'Created at desk')
+      @reservation = Reservation.new(screening_id:, email:)
     end
 
     def call
