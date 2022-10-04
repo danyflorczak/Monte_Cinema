@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :hall do
-    name { 'My name' }
+    name { Faker::FunnyName.name }
     capacity { Faker::Number.number(digits: 2).to_i }
   end
 end

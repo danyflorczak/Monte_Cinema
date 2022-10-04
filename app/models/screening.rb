@@ -35,6 +35,7 @@ class Screening < ApplicationRecord
       .where(end_time: start_time..end_time)
       .or(Screening.where(hall_id:)
       .where(start_time: start_time..end_time))
+      .where.not(id:)
       .empty?
   end
 end
