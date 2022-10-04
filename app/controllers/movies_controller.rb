@@ -53,7 +53,7 @@ class MoviesController < ApplicationController
   private
 
   def set_movie
-    @movie = authorize Movie.find(params[:id])
+    @movie = Movie.find(params[:id])
   end
 
   def movie_params
