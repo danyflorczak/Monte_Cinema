@@ -44,3 +44,7 @@ group :test do
   gem 'simplecov', '~> 0.21.2', require: false
   gem 'webdrivers'
 end
+
+gem 'redis', '~> 4.8'
+gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-cron', '~> 1.7'
