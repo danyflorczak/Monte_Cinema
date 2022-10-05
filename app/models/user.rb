@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :reservations
   validates :email, presence: true
   validates :email, uniqueness: true
+
+  validate do
+    errors.add(:base, 'Password is too long') if password.bytesize > 72
+  end
 end
