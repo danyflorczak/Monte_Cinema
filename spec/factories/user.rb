@@ -5,5 +5,6 @@ FactoryBot.define do
     email { 'test@gmail.com' }
     password { 'password' }
     role { :client }
+    before(:create, &:skip_confirmation!)
   end
 end
