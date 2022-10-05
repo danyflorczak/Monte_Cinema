@@ -24,16 +24,6 @@ class ScreeningsController < ApplicationController
 
   def create
     authorize Screening
-    @screening = Screening.new(screening_params)
-    if @screening.save
-      redirect_to screening_url(@screening), notice: 'Screening was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def create
-    authorize Screening
     @screening = ::Screenings::Create.new(screening_params).call
     if @screening.errors.any?
       render :new, status: :unprocessable_entity
