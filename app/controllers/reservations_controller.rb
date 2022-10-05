@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
-  before_action :set_screening, only: %i[new create create_at_desk]
+  before_action :set_screening, only: %i[new]
   before_action :set_reservation, only: %i[confirm cancel]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[new create_without_registration]
 
   def index
     @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user)
@@ -16,7 +16,8 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = ::Reservations::CreateReservation.new(current_user.id, params[:screening_id], params[:seats])
+    reservation = ::Reservations::CreateReservation.new(current_user.id, current_user.email, params[:screening_id],
+                                                        params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -29,6 +30,18 @@ class ReservationsController < ApplicationController
   def create_at_desk
     authorize Reservation
     reservation = ::Reservations::CreateAtDesk.new(params[:screening_id], params[:seats])
+
+    if reservation.call
+      redirect_to movies_path, notice: 'Reservation successfully created'
+    else
+      redirect_back fallback_location: new_screening_reservation_path(@screening),
+                    alert: 'You have to chose at least one seat'
+    end
+  end
+
+  def create_without_registration
+    authorize Reservation
+    reservation = ::Reservations::CreateWithoutRegistration.new(params[:email], params[:screening_id], params[:seats])
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -67,6 +80,6 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:screening_id, :user_id, :ticket_id, :status, :seats)
+    params.require(:reservation).permit(:screening_id, :user_id, :email, :ticket_id, :status, :seats)
   end
 end

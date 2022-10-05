@@ -1,23 +1,31 @@
 <h2><%= @screening.movie.title %></h2>
 <p><%= format_date(@screening.start_time) %></p>
 <p><%= "Hall #{@screening.hall.name}" %></p>
-<%= form_with(url: screening_reservations_path, method: "post") do |f|%>
+<%= form_with(url: screening_reservations_path, method: "post") do |form|%>
+  <% if !current_user.present? %>
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+  <% end %>
     <% @screening.hall.seats.each do |seat| %>
      <div class="form-check form-check-inline m-2">
        <%if @screening.available_seats.include?(seat)%>
-         <%= f.check_box :seats, { multiple: true, class: "form-check-input"}, seat, nil %>
-         <%= f.label :seats, seat, class: "form-check-label"%>
+         <%= form.check_box :seats, { multiple: true, class: "form-check-input"}, seat, nil %>
+         <%= form.label :seats, seat, class: "form-check-label"%>
        <%else%>
-         <%= f.check_box :seats, { multiple: true, class: "form-check-input", disabled: true}, seat, nil %>
-         <%= f.label :seats, seat, class: "form-check-label"%>
+         <%= form.check_box :seats, { multiple: true, class: "form-check-input", disabled: true}, seat, nil %>
+         <%= form.label :seats, seat, class: "form-check-label"%>
        <% end %>
      </div>
    <% end %>
    <div class = "d-flex justify-content-center form-group ">
-    <% if current_user.manager? %>
-       <%= f.submit 'Book offline reservation', formaction: reservation_at_desk_path, class: "btn btn-info m-3" %>
+    <% if !current_user.present? %>
+      <%= form.submit 'Book a ticket', formaction: reservation_without_registration_path, class: "btn btn-primary m-3" %>
+    <% elsif current_user.manager? %>
+       <%= form.submit 'Book offline reservation', formaction: reservation_at_desk_path, class: "btn btn-info m-3" %>
      <%else%>
-        <%= f.submit 'Book a ticket', class: "btn btn-primary m-3" %>
+        <%= form.submit 'Book a ticket', class: "btn btn-primary m-3" %>
      <%end%>
    </div>
 <% end %>
