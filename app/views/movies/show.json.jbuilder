@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.movie do
   json.id @movie.id
   json.title @movie.title

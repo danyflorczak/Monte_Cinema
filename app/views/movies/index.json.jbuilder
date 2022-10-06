@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @movies do |movie|
   json.movie do
     json.title movie.title
