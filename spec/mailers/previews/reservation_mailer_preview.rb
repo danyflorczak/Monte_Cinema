@@ -6,4 +6,8 @@ class ReservationMailerPreview < ActionMailer::Preview
   def reservation_created
     ReservationMailer.reservation_created
   end
+
+  def reservation_canceled
+    ReservationMailer.reservation_canceled
+  end
 end

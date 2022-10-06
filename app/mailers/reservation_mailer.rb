@@ -6,4 +6,10 @@ class ReservationMailer < ApplicationMailer
 
     mail to: @reservation.email, subject: 'Reservation successfully booked'
   end
+
+  def reservation_canceled
+    @reservation = params[:reservation]
+    
+    mail to: @reservation.email, subject: 'Reservation successfully booked'
+  end
 end

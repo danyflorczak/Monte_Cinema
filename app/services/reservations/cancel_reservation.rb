@@ -8,7 +8,7 @@ module Reservations
 
     def call
       return false unless booked?
-
+      ReservationMailer.with(reservation: reservation).reservation_canceled.deliver_later
       reservation.canceled!
       reservation.tickets.destroy_all
     end
