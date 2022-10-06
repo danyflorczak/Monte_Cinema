@@ -28,12 +28,14 @@ class Screening < ApplicationRecord
   end
 
   def used?
-    screenings = Screening.where(hall_id:).where.not(id:)
-    overlaps = screenings.any? do |screening|
+    errors.add(:base, 'Hall is already used for another screening') if overlaps?
+  end
+
+  private
+
+  def overlaps?
+    Screening.where(hall_id:).where.not(id:).any? do |screening|
       time_range.overlaps?(screening.time_range)
     end
-    errors.add(:base, 'Hall is already used for another screening') if overlaps
-
-    !overlaps
   end
 end
