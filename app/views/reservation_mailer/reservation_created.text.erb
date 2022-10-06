@@ -1,3 +1,7 @@
-Reservation#reservation_created
+Your reservation ID: <%= @reservation.id %> succesffuly booked
 
-<%= @greeting %>, find me in app/views/reservation_mailer/reservation_created.text.erb
+Movie: <%= @reservation.screening.movie.title %> 
+Start Time : <%= @reservation.screening.start_time%> 
+Hall name: <%= @reservation.screening.hall.name  %>
+Seat numbers: <%= @reservation.tickets.map(&:seat).join(", ")  %>
+
