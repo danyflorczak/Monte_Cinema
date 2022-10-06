@@ -21,9 +21,9 @@
    <% end %>
    <div class = "d-flex justify-content-center form-group ">
     <% if !current_user.present? %>
-      <%= form.submit 'Book a ticket', formaction: reservation_without_registration_path, class: "btn btn-primary m-3" %>
+      <%= form.submit 'Book a ticket', formaction: create_without_registration_screening_reservations_path, class: "btn btn-primary m-3" %>
     <% elsif current_user.manager? %>
-       <%= form.submit 'Book offline reservation', formaction: reservation_at_desk_path, class: "btn btn-info m-3" %>
+       <%= form.submit 'Book offline reservation', formaction: create_at_desk_screening_reservations_path, class: "btn btn-info m-3" %>
      <%else%>
         <%= form.submit 'Book a ticket', class: "btn btn-primary m-3" %>
      <%end%>

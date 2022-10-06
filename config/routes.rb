@@ -5,16 +5,17 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
   get 'about', to: 'static_pages#about'
   resources :screenings do
-    resources :reservations, only: %i[new create]
+    resources :reservations, only: %i[new create] do
+      collection do
+        post 'create_at_desk', to: 'reservations#create_at_desk'
+        post 'create_without_registration', to: 'reservations#create_without_registration'
+      end
+    end
   end
   resources :movies
   resources :halls
-  resources :reservations, excep: %i[show new create]
-
-  post 'screenings/:screening_id/reservations/at_desk', to: 'reservations#create_at_desk', as: 'reservation_at_desk'
-  post 'screenings/:screening_id/reservations/create_without_registration',
-       to: 'reservations#create_without_registration', as: 'reservation_without_registration'
-
-  patch 'reservations/:reservation_id/cancel', to: 'reservations#cancel', as: 'cancel_reservation'
-  patch 'reservations/:reservation_id/confirm', to: 'reservations#confirm', as: 'confirm_reservation'
+  resources :reservations, except: %i[show new create] do
+    patch 'cancel', to: 'reservations#cancel'
+    patch 'confirm', to: 'reservations#confirm'
+  end
 end

@@ -19,7 +19,7 @@ RSpec.describe '/movies', type: :request do
   end
 
   describe 'GET /movies/movie_id' do
-     let(:movie) { create :movie }
+    let(:movie) { create :movie }
     subject(:request) { get("/movies/#{movie.id}") }
     it 'returns successful response' do
       expect(response.status).to eq(200)
@@ -328,7 +328,6 @@ RSpec.describe '/movies', type: :request do
       it 'destroy movie' do
         expect { delete("/movies/#{movie.id}") }.to change { Movie.count }.by(-1)
       end
-      
     end
   end
 end
