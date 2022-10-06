@@ -23,19 +23,17 @@ class Screening < ApplicationRecord
     start_time.nil?
   end
 
-  def used?
-    return if hall_available?
-
-    errors.add(:start_time, 'Hall is used for another screening')
+  def time_range
+    start_time..end_time
   end
 
-  def hall_available?
-    Screening
-      .where(hall_id:)
-      .where(end_time: start_time..end_time)
-      .or(Screening.where(hall_id:)
-      .where(start_time: start_time..end_time))
-      .where.not(id:)
-      .empty?
+  def used?
+    screenings = Screening.where(hall_id:).where.not(id:)
+    overlaps = screenings.any? do |screening|
+      time_range.overlaps?(screening.time_range)
+    end
+    errors.add(:base, 'Hall is already used for another screening') if overlaps
+
+    !overlaps
   end
 end
