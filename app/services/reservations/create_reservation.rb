@@ -17,6 +17,8 @@ module Reservations
         @reservation.save!
         create_tickets
       end
+
+      ReservationMailer.with(email: @email, reservation: @reservation).reservation_created.deliver_later
     end
 
     private
