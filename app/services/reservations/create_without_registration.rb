@@ -10,7 +10,7 @@ module Reservations
     end
 
     def call
-      return false unless seats_selected?
+      return false unless seats_selected? && seats_available?
 
       ActiveRecord::Base.transaction do
         reservation.save!
@@ -24,7 +24,7 @@ module Reservations
 
     attr_reader :seats, :reservation
 
-    def seats_taken?
+    def seats_available?
       (Screening.find(@screening_id).all_taken_seats & seats ).empty?
     end
 
