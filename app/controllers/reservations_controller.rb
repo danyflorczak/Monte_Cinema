@@ -46,11 +46,14 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.call
+        @created_reservation = @reservation.created_reservation
         format.html { redirect_to movies_path, notice: 'Reservation successfully created' }
-        format.json { render :show, status: :created, location: @reservation }
+        format.json { render :show }
       else
-        format.html { redirect_back fallback_location: new_screening_reservation_path(@screening),
-                      alert: 'You have to chose at least one seat' }
+        format.html do
+          redirect_back fallback_location: new_screening_reservation_path(@screening),
+                        alert: 'You have to chose at least one seat'
+        end
         format.json { rrender json: @reservation.errors, status: :unprocessable_entity }
       end
     end

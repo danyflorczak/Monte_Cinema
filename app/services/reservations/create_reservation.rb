@@ -21,7 +21,7 @@ module Reservations
 
     private
 
-    attr_reader :seats
+    attr_reader :seats, :reservation
 
     def create_tickets
       seats.each do |seat|
