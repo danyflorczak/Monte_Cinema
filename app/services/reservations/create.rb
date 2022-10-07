@@ -22,8 +22,7 @@ module Reservations
         create_tickets
       end
       ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
-      return reservation
-
+      reservation
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       errors << "Reservation unsuccessful, errors that prohibited from saving: #{e.message}"
       false
@@ -34,11 +33,11 @@ module Reservations
     attr_reader :seats, :reservation
 
     def seats_available?
-      if (Screening.find(@screening_id).all_taken_seats & seats ).empty?
-        return true
+      if (Screening.find(@screening_id).all_taken_seats & seats).empty?
+        true
       else
         errors << 'Seats already taken'
-        return false
+        false
       end
     end
 
@@ -49,7 +48,7 @@ module Reservations
     end
 
     def seats_selected?
-      if seats.nil? 
+      if seats.nil?
         errors << 'Please select your seat(s)'
         return false
       elsif seats.empty?

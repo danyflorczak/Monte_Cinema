@@ -16,8 +16,8 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = ::Reservations::Create.new(**{user_id: current_user.id, email: current_user.email, screening_id: params[:screening_id],
-                                                        seats: params[:seats], status: :booked})
+    reservation = ::Reservations::Create.new(**{ user_id: current_user.id, email: current_user.email, screening_id: params[:screening_id],
+                                                 seats: params[:seats], status: :booked })
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -29,7 +29,8 @@ class ReservationsController < ApplicationController
 
   def create_at_desk
     authorize Reservation
-    reservation = ::Reservations::Create.new(**{ screening_id: params[:screening_id], seats: params[:seats], email: "Created at desk", status: :confirmed})
+    reservation = ::Reservations::Create.new(**{ screening_id: params[:screening_id], seats: params[:seats],
+                                                 email: 'Created at desk', status: :confirmed })
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
@@ -41,7 +42,8 @@ class ReservationsController < ApplicationController
 
   def create_without_registration
     authorize Reservation
-    reservation = ::Reservations::Create.new(**{email: params[:email], screening_id: params[:screening_id], seats: params[:seats], status: :booked})
+    reservation = ::Reservations::Create.new(**{ email: params[:email], screening_id: params[:screening_id],
+                                                 seats: params[:seats], status: :booked })
 
     if reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
