@@ -11,6 +11,7 @@ module Reservations
 
       reservation.canceled!
       reservation.tickets.destroy_all
+      ReservationMailer.with(reservation:).reservation_canceled.deliver_later
     end
 
     private

@@ -1,0 +1,7 @@
+Your reservation ID: <%= @reservation.id %> succesffuly booked
+
+Movie: <%= @reservation.screening.movie.title %> 
+Start Time : <%= @reservation.screening.start_time%> 
+Hall name: <%= @reservation.screening.hall.name  %>
+Seat numbers: <%= @reservation.tickets.map(&:seat).join(", ")  %>
+

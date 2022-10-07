@@ -13,18 +13,20 @@ module Reservations
       return false unless seats_selected?
 
       ActiveRecord::Base.transaction do
-        @reservation.save!
+        reservation.save!
         create_tickets
       end
+
+      ReservationMailer.with(reservation:).reservation_created.deliver_later
     end
 
     private
 
-    attr_reader :seats
+    attr_reader :seats, :reservation
 
     def create_tickets
       seats.each do |seat|
-        @reservation.tickets.create(seat:)
+        reservation.tickets.create(seat:)
       end
     end
 
