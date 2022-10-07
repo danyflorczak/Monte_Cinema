@@ -24,6 +24,10 @@ module Reservations
 
     attr_reader :seats, :reservation
 
+    def seats_taken?
+      (Screening.find(@screening_id).all_taken_seats & seats ).empty?
+    end
+
     def create_tickets
       seats.each do |seat|
         reservation.tickets.create(seat:)
