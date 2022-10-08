@@ -17,10 +17,10 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    reservation = ::Reservations::CreateReservation.new(current_user.id, current_user.email, params[:screening_id],
-                                                        params[:seats])
+    @reservation = ::Reservations::Create.new(**{ user_id: current_user.id, email: current_user.email, screening_id: params[:screening_id],
+                                                  seats: params[:seats], status: :booked })
 
-    if reservation.call
+    if @reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
     else
       redirect_back fallback_location: new_screening_reservation_path(@screening),
@@ -30,9 +30,10 @@ class ReservationsController < ApplicationController
 
   def create_at_desk
     authorize Reservation
-    reservation = ::Reservations::CreateAtDesk.new(params[:screening_id], params[:seats])
+    @reservation = ::Reservations::Create.new(**{ screening_id: params[:screening_id], seats: params[:seats],
+                                                  email: 'Created at desk', status: :confirmed })
 
-    if reservation.call
+    if @reservation.call
       redirect_to movies_path, notice: 'Reservation successfully created'
     else
       redirect_back fallback_location: new_screening_reservation_path(@screening),
@@ -42,7 +43,8 @@ class ReservationsController < ApplicationController
 
   def create_without_registration
     authorize Reservation
-    @reservation = ::Reservations::CreateWithoutRegistration.new(params[:email], params[:screening_id], params[:seats])
+    @reservation = ::Reservations::Create.new(**{ email: params[:email], screening_id: params[:screening_id],
+                                                  seats: params[:seats], status: :booked })
 
     respond_to do |format|
       if @reservation.call
@@ -54,7 +56,7 @@ class ReservationsController < ApplicationController
           redirect_back fallback_location: new_screening_reservation_path(@screening),
                         alert: 'You have to chose at least one seat'
         end
-        format.json { rrender json: @reservation.errors, status: :unprocessable_entity }
+        format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
   end
