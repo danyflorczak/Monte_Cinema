@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
+  protect_from_forgery unless: -> { request.format.json? }
   before_action :set_screening, only: %i[new]
   before_action :set_reservation, only: %i[confirm cancel]
   before_action :authenticate_user!, except: %i[new create_without_registration]
@@ -41,13 +42,20 @@ class ReservationsController < ApplicationController
 
   def create_without_registration
     authorize Reservation
-    reservation = ::Reservations::CreateWithoutRegistration.new(params[:email], params[:screening_id], params[:seats])
+    @reservation = ::Reservations::CreateWithoutRegistration.new(params[:email], params[:screening_id], params[:seats])
 
-    if reservation.call
-      redirect_to movies_path, notice: 'Reservation successfully created'
-    else
-      redirect_back fallback_location: new_screening_reservation_path(@screening),
-                    alert: 'You have to chose at least one seat'
+    respond_to do |format|
+      if @reservation.call
+        @created_reservation = @reservation.created_reservation
+        format.html { redirect_to movies_path, notice: 'Reservation successfully created' }
+        format.json { render :show }
+      else
+        format.html do
+          redirect_back fallback_location: new_screening_reservation_path(@screening),
+                        alert: 'You have to chose at least one seat'
+        end
+        format.json { rrender json: @reservation.errors, status: :unprocessable_entity }
+      end
     end
   end
 

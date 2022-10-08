@@ -1,3 +1,5 @@
+
+
 # frozen_string_literal: true
 
 module Reservations
@@ -39,3 +41,4 @@ module Reservations
     end
   end
 end
+Footer
