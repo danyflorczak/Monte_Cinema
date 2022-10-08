@@ -6,7 +6,7 @@ class ScreeningPolicy < ApplicationPolicy
   end
 
   def show?
-    manager?
+    true
   end
 
   def new?
