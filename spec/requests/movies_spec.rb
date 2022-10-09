@@ -70,16 +70,7 @@ RSpec.describe '/movies', type: :request do
   end
 
   describe 'POST /movies' do
-    let(:params) do
-      {
-        movie: {
-          title:,
-          description: Faker::Movie.quote,
-          duration:
-        }
-      }
-    end
-
+    let(:params) { { movie: attributes_for(:movie, title:, description: Faker::Movie.quote, duration:) } }
     let(:title) { Faker::Movie.title }
     let(:duration) { Faker::Number.number(digits: 2).to_i }
 
@@ -202,16 +193,7 @@ RSpec.describe '/movies', type: :request do
 
   describe 'PATCH /movies' do
     let(:movie) { create :movie }
-    let(:params) do
-      {
-        movie: {
-          title:,
-          description: Faker::Movie.quote,
-          duration:
-        }
-      }
-    end
-
+    let(:params) { { movie: attributes_for(:movie, title:, description: Faker::Movie.quote, duration:) } }
     let(:title) { Faker::Movie.title }
     let(:duration) { Faker::Number.number(digits: 2).to_i }
 
@@ -287,7 +269,7 @@ RSpec.describe '/movies', type: :request do
   end
 
   describe 'DELETE /movies' do
-    let(:movie) { create :movie }
+    let!(:movie) { create :movie }
     context 'when no user' do
       it 'redirects to sign_in' do
         delete("/movies/#{movie.id}")
@@ -326,7 +308,7 @@ RSpec.describe '/movies', type: :request do
       end
 
       it 'destroy movie' do
-        expect { delete("/movies/#{movie.id}") }.to change { Movie.count }.by(-1)
+        expect { delete("/movies/#{movie.id}") }.to change{ Movie.count }.by(-1)
       end
     end
   end

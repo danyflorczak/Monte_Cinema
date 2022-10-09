@@ -86,15 +86,7 @@ RSpec.describe '/halls', type: :request do
   end
 
   describe 'POST /halls' do
-    let(:params) do
-      {
-        hall: {
-          name:,
-          capacity:
-        }
-      }
-    end
-
+    let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
     let(:name) { Faker::FunnyName.name }
     let(:capacity) { Faker::Number.number(digits: 2) }
 
@@ -213,14 +205,7 @@ RSpec.describe '/halls', type: :request do
 
   describe 'PATCH /halls' do
     let(:hall) { create :hall }
-    let(:params) do
-      {
-        hall: {
-          name:,
-          capacity:
-        }
-      }
-    end
+    let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
 
     let(:name) { "Hall #{Faker::Number.number(digits: 1)}" }
     let(:capacity) { Faker::Number.number(digits: 2) }
@@ -290,7 +275,7 @@ RSpec.describe '/halls', type: :request do
   end
 
   describe 'DELETE /halls' do
-    let(:hall) { create :hall }
+    let!(:hall) { create :hall }
     context 'when user not signed in' do
       it 'redirects to sign_in' do
         delete("/halls/#{hall.id}")
@@ -329,7 +314,7 @@ RSpec.describe '/halls', type: :request do
       end
 
       it 'destroy hall record' do
-        expect { delete("/halls/#{hall.id}") }.not_to change(Hall, :count)
+        expect { delete("/halls/#{hall.id}") }.to change(Hall, :count)
       end
     end
   end
