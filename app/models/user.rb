@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   enum role: { client: 0, manager: 1 }
   has_many :reservations
+  has_many :promotions
   validates :email, presence: true
   validates :email, uniqueness: true
 
