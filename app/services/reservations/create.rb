@@ -22,6 +22,7 @@ module Reservations
         create_tickets
       end
       ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
+      true
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       errors << "Booking reservation failed!, errors that prohibited from saving: #{e.message}"
       false
