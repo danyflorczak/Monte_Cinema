@@ -10,7 +10,7 @@ class ScreeningPolicy < ApplicationPolicy
   end
 
   def new?
-    manager? || client?
+    manager?
   end
 
   def edit?
@@ -22,7 +22,7 @@ class ScreeningPolicy < ApplicationPolicy
   end
 
   def create?
-    manager? || client?
+    manager?
   end
 
   def update?
