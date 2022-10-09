@@ -103,45 +103,48 @@ RSpec.describe '/halls', type: :request do
           get('/screenings/new')
           expect(response).to redirect_to('/users/sign_in')
         end
-  
+
         it 'returns redirect status' do
           get('/screenings/new')
           expect(response.status).to eq(302)
         end
       end
-  
+
       context 'when user without permission' do
         before { sign_in user }
         it 'redirects to root' do
           get('/screenings/new')
           expect(response).to redirect_to('/')
         end
-  
+
         it 'returns redirect status' do
           get('/screenings/new')
           expect(response.status).to eq(302)
         end
       end
-  
+
       context 'when user with permission' do
         before { sign_in manager }
         it 'returns successful response' do
           get('/screenings/new')
           expect(response.status).to eq(200)
         end
-  
+
         it 'renders proper template' do
           get('/screenings/new')
           expect(response).to render_template('screenings/new')
         end
       end
-    end 
+    end
   end
 
   describe 'POST /screenings' do
-    let(:movie) {create :movie}
-    let(:hall) {create :hall}
-    let(:params) { { screening: attributes_for(:screening, movie_id: movie.id, hall_id: hall.id, start_time: DateTime.current.beginning_of_minute, price: rand(15..24) ) } }
+    let(:movie) { create :movie }
+    let(:hall) { create :hall }
+    let(:params) do
+      { screening: attributes_for(:screening, movie_id: movie.id, hall_id: hall.id,
+                                              start_time: DateTime.current.beginning_of_minute, price: rand(15..24)) }
+    end
 
     context 'when user not signed in' do
       it 'redirects to sign_in' do
@@ -234,7 +237,7 @@ RSpec.describe '/halls', type: :request do
       end
 
       it 'destroy screening' do
-        expect { delete("/screenings/#{screening.id}") }.to change{ Screening.count }.by(-1)
+        expect { delete("/screenings/#{screening.id}") }.to change { Screening.count }.by(-1)
       end
     end
   end

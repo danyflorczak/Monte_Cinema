@@ -10,7 +10,7 @@ class ScreeningPolicy < ApplicationPolicy
   end
 
   def new?
-    manager? 
+    manager?
   end
 
   def edit?

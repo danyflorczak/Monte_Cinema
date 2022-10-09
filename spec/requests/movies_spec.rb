@@ -308,7 +308,7 @@ RSpec.describe '/movies', type: :request do
       end
 
       it 'destroy movie' do
-        expect { delete("/movies/#{movie.id}") }.to change{ Movie.count }.by(-1)
+        expect { delete("/movies/#{movie.id}") }.to change { Movie.count }.by(-1)
       end
     end
   end
