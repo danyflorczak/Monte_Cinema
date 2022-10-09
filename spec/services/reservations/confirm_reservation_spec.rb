@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Reservations::CancelReservation do
+RSpec.describe Reservations::ConfirmReservation do
   describe '#call' do
     context 'when reservation is booked' do
       let!(:reservation) { create :reservation }
       subject { described_class.new(reservation).call }
 
-      it 'updates status to canceled' do
-        expect { subject }.to(change { reservation.status }.from('booked').to('canceled'))
+      it 'updates status to confirmed' do
+        expect { subject }.to(change { reservation.status }.from('booked').to('confirmed'))
       end
     end
 
