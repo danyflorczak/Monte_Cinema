@@ -1,28 +1,9 @@
-<div id="<%= dom_id screening %>">
-
-  <p>
-    <strong>Movie:</strong>
-    <%= screening.movie.title %>
-  </p>
-
-  <p>
-    <strong>Hall:</strong>
-    <%= screening.hall.name %>
-  </p>
-  
-  <p>
-    <strong>Start:</strong>
-    <%= format_date(screening.start_time) %>
-  </p>
-
-  <p>
-    <strong>End:</strong>
-    <%= format_date(screening.end_time) %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= screening.price %>
-  </p>
-
-</div>
+<h5 class="card-title">Title: <%= screening.movie.title %></h5>
+<h6 class="card-subtitle mb-2 text-muted">From <%= format_date(screening.start_time) %> to <%= format_date(screening.end_time) %></h6>
+<p class="card-text">
+  <ul>
+    <li> Duration: <small><%= screening.movie.duration %> min </small></li>
+    <li> Hall: <%= screening.hall.name %> </li>
+    <li> Price:  <%= screening.price %> </li>
+  </ul>
+</p>

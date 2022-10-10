@@ -2,11 +2,15 @@
 
 <div id="screenings">
   <% @screenings.each do |screening| %>
-    <%= render screening %>
-    <p>
-      <%= link_to "Show this screening", screening %>
-    </p>
+    <div class="card m-3 bg-dark text-white" style="width: 30rem;">
+      <div class="card-body">
+        <%= render screening %>
+        <p>
+          <%= link_to "Show this screening", screening, class: "btn btn-outline-primary m-2"%>
+        </p>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New screening", new_screening_path %>
+<%= link_to "New screening", new_screening_path, class: "btn btn-primary m-3" %>
