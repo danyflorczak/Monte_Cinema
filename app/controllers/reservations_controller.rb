@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create_without_registration]
 
   def index
-    @reservations = policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user)
+    @pagy, @reservations = pagy(policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user))
   end
 
   def new
