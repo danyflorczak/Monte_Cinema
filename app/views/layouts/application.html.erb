@@ -11,12 +11,13 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <%= render 'layouts/navigation'%>
-    <div class="container">
+    <div class="container ">
       <p class="notice text-success"> <%=notice%> </p>
       <p class="alert text-warning"> <%=alert%> </p>
       <%= yield %>
     </div>
+    <%= render 'layouts/footer'%>
   </body>
 </html>

@@ -2,7 +2,7 @@
 <%= create_date_links %>
 <div id="movies">
   <% @movies.each do |movie| %>
-    <div class="card m-3" style="width: 30rem;">
+    <div class="card m-3 bg-dark text-white" style="width: 30rem;">
       <div class="card-body">
         <%= render movie %>
         <%if current_user.present?%>
@@ -15,5 +15,8 @@
 
   <% end %>
 </div>
-
-<%= link_to "New movie", new_movie_path %>
+<% if current_user.present? %>
+  <% if manager? %>
+    <%= link_to "Add new movie", new_movie_path, class: "btn btn-primary p-2 m-3" %>
+  <%end%>
+<%end%>

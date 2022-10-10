@@ -1,12 +1,6 @@
-<div>
-  <p>
-    <strong>Reservation ID:</strong>
-     <%= reservation.id %>
-  </p>
-  <p>
-    <strong>Owner</strong>
-      <%= reservation.email %>
-  </p>
+<h5 class="card-title"> Reservation ID: <%= reservation.id %> </h5>
+<h6 class="card-subtitle mb-2 text-muted">Owner: <%= reservation.email %></h6>
+<div class="card-text">
   <ul>
     <li>
         <strong>Movie:</strong>
@@ -19,8 +13,16 @@
     </li>
 
     <li>
+        <strong>Hall:</strong>
+        <%=  format_date(reservation.screening.start_time) %> 
+    </li>
+
+    <li>
         <strong>Seat:</strong>
-        <%= reservation.tickets.map(&:seat).join(", ")  %>
+        <% if reservation.tickets.any? %>
+          <%= reservation.tickets.map(&:seat).join(", ")  %>
+        <% end %>
+          
     </li>
 
 
@@ -28,6 +30,5 @@
         <strong>Reservation status:</strong>
         <%= reservation.status %>
     </li>
-
-
+  </ul>
 </div>

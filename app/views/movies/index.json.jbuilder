@@ -2,6 +2,7 @@
 
 json.array! @movies do |movie|
   json.movie do
+    json.id movie.id
     json.title movie.title
     json.description movie.description
     json.duration movie.duration

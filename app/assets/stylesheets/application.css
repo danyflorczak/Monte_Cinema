@@ -13,3 +13,41 @@
  *= require_tree .
  *= require_self
  */
+ body{
+  background-color: #242333 !important;
+  color: white !important;
+ }
+
+ .seat {
+  appearance: none !important;
+  background-color: rgb(161, 161, 161) !important;
+  height: 12px !important;
+  width: 15px !important;
+  margin: 3px !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+.seat.occupied {
+  background-color: #444451 !important;
+}
+
+.reservation-container {
+  text-align: center !important;
+  perspective: 1000px !important;
+  width: 900px !important;
+  margin: 0 auto !important;
+  margin-bottom: 30px !important;
+}
+.form-label-reservation{
+  font-size: 8px !important;
+}
+.screen {
+  background-color: #fff !important;
+  height: 140px !important;
+  width: 600px !important;
+  margin: 0 auto !important;
+  margin-bottom: 30px !important;
+  transform: rotateX(-45deg) !important;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7) !important;
+}
