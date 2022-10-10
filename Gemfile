@@ -12,6 +12,7 @@ gem 'rails', '~> 7.0.3'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
+gem 'pagy', '~> 5.10'
 
 # User Authentication
 gem 'devise', '~> 4.8', '>= 4.8.1'
