@@ -1,16 +1,16 @@
 <h1>Screenings</h1>
 
-<div id="screenings">
-  <% @screenings.each do |screening| %>
-    <div class="card m-3 bg-dark text-white" style="width: 30rem;">
-      <div class="card-body">
-        <%= render screening %>
-        <p>
-          <%= link_to "Show this screening", screening, class: "btn btn-outline-primary m-2"%>
-        </p>
-      </div>
+<%== pagy_nav(@pagy) %>
+<% @screenings.each do |screening| %>
+  <div class="card m-3 bg-dark text-white" style="width: 30rem;">
+    <div class="card-body">
+      <%= render screening %>
+      <p>
+        <%= link_to "Show this screening", screening, class: "btn btn-outline-primary m-2"%>
+      </p>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
+
 
 <%= link_to "New screening", new_screening_path, class: "btn btn-primary m-3" %>
