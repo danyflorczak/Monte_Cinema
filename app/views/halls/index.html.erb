@@ -1,12 +1,13 @@
 <h1>Halls</h1>
 
-<div id="halls">
-  <% @halls.each do |hall| %>
-    <%= render hall %>
-    <p>
-      <%= link_to "Show this hall", hall %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New hall", new_hall_path %>
+<% @halls.each do |hall| %>
+  <div class="card m-3 bg-dark text-white" style="width: 30rem;">
+    <div class="card-body">
+      <%= render hall %>
+      <p>
+        <%= link_to "Show this hall", hall, class: "btn btn-outline-primary m-2" %>
+      </p>
+    </div>
+  </div>
+<% end %>
+<%= link_to "New hall", new_hall_path, class: "btn btn-primary m-3"  %>

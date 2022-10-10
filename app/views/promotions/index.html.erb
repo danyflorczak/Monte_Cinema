@@ -2,18 +2,11 @@
 
 
 <% @promotions.each do |promotion| %>
-  <p>
-    <strong>Value:</strong>
-    <%= promotion.value %>%
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= promotion.description %>
-  </p>
-
-  <p>
-    <strong>Promo Code:</strong>
-    <%= promotion.code %>
-  </p>
+  <div class="card m-3 bg-dark text-white" style="width: 30rem;">
+    <div class="card-body">
+      <h5 class="card-title"><%= promotion.value %>%</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Promo Code: <%= promotion.code %></h6>
+      <p class="card-text"><%= promotion.description %></p>
+    </div>
+  </div>
 <% end %>
