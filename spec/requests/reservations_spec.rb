@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe '/halls', type: :request do
@@ -15,7 +17,6 @@ RSpec.describe '/halls', type: :request do
         expect(response.status).to eq(302)
       end
     end
-
   end
 
   context 'when user with permission' do
@@ -32,7 +33,7 @@ RSpec.describe '/halls', type: :request do
   end
 
   describe 'GET screenings/screening_id/reservations/new' do
-    let(:screening) {create :screening}
+    let(:screening) { create :screening }
     it 'returns successful response' do
       get("/screenings/#{screening.id}/reservations/new")
       expect(response.status).to eq(200)
@@ -43,5 +44,4 @@ RSpec.describe '/halls', type: :request do
       expect(response).to render_template('reservations/new')
     end
   end
-
 end
