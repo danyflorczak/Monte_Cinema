@@ -24,5 +24,8 @@ $ rails db:seed
 $ rails server
 
 # Run Cron Jobs:
-$ sidekiq or bundle exec sidekiq
+$ sidekiq 
+
+# Run Tests:
+$ rspec
 ```
