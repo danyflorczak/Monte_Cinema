@@ -1,24 +1,25 @@
-# README
+## Tech Stack
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- Ruby 3.1.2
+- Rails 7.0.3
+- Redis 4.8
+- PostgreSQL 13.2
+- Sidekiq 14.5
 
-Things you may want to cover:
+## Instalation
 
-* Ruby version
+```
+# Clone repository:
+$ git clone https://github.com/danyflorczak/Monte_Cinema.git
 
-* System dependencies
+# Install required gems:
+$ bundle install
 
-* Configuration
+# Create database with basic seeds:
+$ rails db:create
+$ rails db:migrate
+$ rails db:seed
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Run server
+$ rails server
+```
