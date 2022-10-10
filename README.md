@@ -22,4 +22,7 @@ $ rails db:seed
 
 # Run server
 $ rails server
+
+# Run Cron Jobs:
+$ sidekiq or bundle exec sidekiq
 ```
