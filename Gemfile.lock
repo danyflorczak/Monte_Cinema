@@ -250,6 +250,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (5.2.0)
+      activesupport (>= 5.2.0)
     sidekiq (6.5.7)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
@@ -326,6 +328,7 @@ DEPENDENCIES
   rspec-rails (~> 5.1, >= 5.1.2)
   rubocop (~> 1.36)
   selenium-webdriver
+  shoulda-matchers (~> 5.0)
   sidekiq (~> 6.5)
   sidekiq-cron (~> 1.7)
   simplecov (~> 0.21.2)

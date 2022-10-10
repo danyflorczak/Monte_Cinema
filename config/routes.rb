@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   resources :movies
   resources :halls
+  resources :promotions, only: %i[index]
   resources :reservations, except: %i[show new create] do
     patch 'cancel', to: 'reservations#cancel'
     patch 'confirm', to: 'reservations#confirm'

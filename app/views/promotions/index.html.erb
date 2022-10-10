@@ -1,0 +1,19 @@
+<h1> Your promotions </h1>
+
+
+<% @promotions.each do |promotion| %>
+  <p>
+    <strong>Value:</strong>
+    <%= promotion.value %>%
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= promotion.description %>
+  </p>
+
+  <p>
+    <strong>Promo Code:</strong>
+    <%= promotion.code %>
+  </p>
+<% end %>

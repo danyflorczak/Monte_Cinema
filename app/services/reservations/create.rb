@@ -21,6 +21,8 @@ module Reservations
         reservation.save!
         create_tickets
       end
+
+      create_promo_code if @user_id && reservation.tickets.count >= 3
       ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       errors << "Booking reservation failed!, errors that prohibited from saving: #{e.message}"
@@ -48,6 +50,15 @@ module Reservations
       seats.each do |seat|
         reservation.tickets.create(seat:)
       end
+    end
+
+    def create_promo_code
+      Promotion.create(
+        value: 10,
+        description: 'Use code at cash desk in our Cinema and get price cut for our assortment in food bar!',
+        code: rand(1000..3000),
+        user_id: @user_id
+      )
     end
 
     def seats_selected?
