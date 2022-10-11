@@ -13,7 +13,7 @@ gem 'rails', '~> 7.0.3'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-#seeds and tests
+# seeds and tests
 gem 'faker', '~> 2.23'
 
 # User Authentication

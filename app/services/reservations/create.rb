@@ -40,11 +40,11 @@ module Reservations
 
     def seats_available?
       screening = Screening.find(@screening_id)
-      if (screening.all_taken_seats & seats).empty? && !((screening.available_seats & seats).empty?)
-        return true
+      if (screening.all_taken_seats & seats).empty? && !(screening.available_seats & seats).empty?
+        true
       else
         errors << 'Seats already taken or incorrect'
-        return false
+        false
       end
     end
 
@@ -73,6 +73,5 @@ module Reservations
         user_id: @user_id
       )
     end
-
   end
 end
