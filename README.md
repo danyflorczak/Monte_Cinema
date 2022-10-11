@@ -1,5 +1,5 @@
 ## Monte Cinema
-Project for cinema with booking system with views and simple api
+Rubycamp Project :D
 
 ## Tech Stack
 
