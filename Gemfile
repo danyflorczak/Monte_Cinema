@@ -50,3 +50,8 @@ end
 gem 'redis', '~> 4.8'
 gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-cron', '~> 1.7'
+
+gem "sentry-ruby", '~> 5.5.0'
+gem "sentry-rails", '~> 5.5.0'
+gem "sentry-sidekiq", '~> 5.5.0'
+gem "sentry-delayed_job", '~> 5.5.0'
