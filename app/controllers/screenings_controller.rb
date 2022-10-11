@@ -6,7 +6,7 @@ class ScreeningsController < ApplicationController
 
   def index
     authorize Screening
-    @screenings = Screening.includes(:movie, :hall)
+    @pagy, @screenings = pagy(Screening.includes(:movie, :hall))
   end
 
   def show

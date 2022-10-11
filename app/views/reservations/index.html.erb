@@ -1,6 +1,5 @@
 <div class="container">
   <h1>Reservations</h1>
-
   <% @reservations.each do |reservation| %>
     <div class="card m-3 bg-dark text-white" style="width: 30rem;">
       <div class="card-body">
@@ -12,5 +11,6 @@
       </div>
     </div>
   <% end %>
+  <div class="m-3"><%== pagy_bootstrap_nav(@pagy) %></div>
 </div>
 

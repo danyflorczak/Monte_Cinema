@@ -2,6 +2,14 @@
 
 require 'faker'
 
+user = User.new(
+  email: 'test@manager.com',
+  password: 'password',
+  role: 'manager'
+)
+user.skip_confirmation!
+user.save!
+
 hall_capacities = [20, 50, 100, 200]
 
 10.times do
