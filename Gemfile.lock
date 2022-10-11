@@ -352,10 +352,10 @@ DEPENDENCIES
   rspec-rails (~> 5.1, >= 5.1.2)
   rubocop (~> 1.36)
   selenium-webdriver
-  sentry-delayed_job
-  sentry-rails
-  sentry-ruby
-  sentry-sidekiq
+  sentry-delayed_job (~> 5.5.0)
+  sentry-rails (~> 5.5.0)
+  sentry-ruby (~> 5.5.0)
+  sentry-sidekiq (~> 5.5.0)
   shoulda-matchers (~> 5.0)
   sidekiq (~> 6.5)
   sidekiq-cron (~> 1.7)
