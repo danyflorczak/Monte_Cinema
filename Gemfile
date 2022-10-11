@@ -13,6 +13,8 @@ gem 'rails', '~> 7.0.3'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
+#seeds and tests
+gem 'faker', '~> 2.23'
 
 # User Authentication
 gem 'devise', '~> 4.8', '>= 4.8.1'
@@ -27,8 +29,6 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
-  # For seeds
-  gem 'faker', '~> 2.23'
 end
 
 group :development do
