@@ -22,7 +22,7 @@ module Reservations
         create_tickets
       end
 
-      create_promo_code if @user_id && reservation.tickets.count >= 3
+      create_promo_code if @user_id && reservation.tickets.count >= NUM_OF_TICKETS_TO_GET_DISCOUNT
       ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
       true
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
@@ -39,11 +39,12 @@ module Reservations
     attr_reader :seats, :reservation
 
     def seats_available?
-      if (Screening.find(@screening_id).all_taken_seats & seats).empty?
-        true
+      screening = Screening.find(@screening_id)
+      if (screening.all_taken_seats & seats).empty? && !((screening.available_seats & seats).empty?)
+        return true
       else
-        errors << 'Seats already taken'
-        false
+        errors << 'Seats already taken or incorrect'
+        return false
       end
     end
 
@@ -51,15 +52,6 @@ module Reservations
       seats.each do |seat|
         reservation.tickets.create(seat:)
       end
-    end
-
-    def create_promo_code
-      Promotion.create(
-        value: 10,
-        description: 'Use code at cash desk in our Cinema and get price cut for our assortment in food bar!',
-        code: rand(1000..3000),
-        user_id: @user_id
-      )
     end
 
     def seats_selected?
@@ -72,5 +64,15 @@ module Reservations
       end
       true
     end
+
+    def create_promo_code
+      Promotion.create(
+        value: PROMO_VALUE,
+        description: 'Use code at cash desk in our Cinema and get price cut for our assortment in food bar!',
+        code: rand(1000..3000),
+        user_id: @user_id
+      )
+    end
+
   end
 end

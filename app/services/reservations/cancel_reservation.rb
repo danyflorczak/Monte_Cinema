@@ -9,8 +9,10 @@ module Reservations
     def call
       return false unless booked?
 
-      reservation.canceled!
-      reservation.tickets.destroy_all
+      ActiveRecord::Base.transaction do
+        reservation.canceled!
+        reservation.tickets.destroy_all
+      end
       ReservationMailer.with(reservation:).reservation_canceled.deliver_later
     end
 
