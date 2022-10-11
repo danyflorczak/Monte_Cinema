@@ -48,7 +48,7 @@ class ReservationsController < ApplicationController
       if @reservation.call
         @created_reservation = @reservation.created_reservation
         format.html { redirect_to movies_path, notice: 'Reservation successfully created' }
-        format.json { render :show }
+        format.json { render :show, status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
