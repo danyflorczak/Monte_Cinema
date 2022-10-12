@@ -35,6 +35,9 @@ $ rspec
 ## Live App 
 App is deployed on Heroku and you can find it here: </br>
 https://monte-cinema-v1.herokuapp.com/ </br>
+TESTS USERS: </br>
+- login: test@manager.com, password: 'password'
+- login: test@client.com, password: 'password'
 </br>
 App have few addons:
 - Heroku Redis
