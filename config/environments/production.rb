@@ -2,6 +2,9 @@
 
 require 'active_support/core_ext/integer/time'
 
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -62,10 +65,10 @@ require 'active_support/core_ext/integer/time'
   # config.active_job.queue_name_prefix = "my_app_production"
 
   config.action_mailer.perform_caching = false
-
+  config.action_mailer.perform_deliveries = true
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -89,4 +92,5 @@ require 'active_support/core_ext/integer/time'
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.action_mailer.default_url_options = { :host => "https://monte-cinema-v1.herokuapp.com" }
 end
