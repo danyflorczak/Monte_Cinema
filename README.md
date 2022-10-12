@@ -32,10 +32,16 @@ $ sidekiq
 # Run Tests:
 $ rspec
 ```
-## Live App and Documentation
+## Live App 
 App is deployed on Heroku and you can find it here:
 https://monte-cinema-v1.herokuapp.com/
+App have few addons:
+-Heroku redis
+-sentry
+-email sending ( in progress )
+generally speaking app is almost complete beside sending emails to user which is in progress
 
+## Api Documentation
 Link to Api documentation:
 https://documenter.getpostman.com/view/20280442/2s83zjt3y2#07a9a79e-32f7-4bb5-a21a-e9aa4dc7f505
 
