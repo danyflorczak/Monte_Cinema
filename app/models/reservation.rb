@@ -7,4 +7,5 @@ class Reservation < ApplicationRecord
   has_one :hall, through: :screening
   has_one :movie, through: :screening
   has_many :tickets, dependent: :destroy
+  validates :email, presence: true
 end
