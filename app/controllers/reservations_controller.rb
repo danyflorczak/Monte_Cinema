@@ -70,7 +70,7 @@ class ReservationsController < ApplicationController
     if confirmation.call
       redirect_to reservations_path, notice: 'Reservation confirmed'
     else
-      redirect_back fallback_location:, alert: "Canceled reservations can't be confirmed!"
+      redirect_back fallback_location: reservations_path, alert: "Canceled reservations can't be confirmed!"
     end
   end
 
