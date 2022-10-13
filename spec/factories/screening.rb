@@ -5,6 +5,6 @@ FactoryBot.define do
     association :movie
     association :hall
     start_time { DateTime.current.beginning_of_minute }
-    price { rand(15..24) }
+    price { rand(1..10) }
   end
 end

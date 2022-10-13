@@ -9,7 +9,7 @@ RSpec.describe Reservations::Create do
       screening_id: screening.id,
       email: 'test@gmail.com',
       status: :booked,
-      seats: [rand(1.50).to_s]
+      seats: [rand(1..50).to_s]
     }
   end
 

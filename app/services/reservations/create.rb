@@ -63,6 +63,5 @@ module Reservations
       end
       true
     end
-
   end
 end
