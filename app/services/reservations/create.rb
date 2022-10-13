@@ -22,7 +22,6 @@ module Reservations
         create_tickets
       end
 
-      create_promo_code if @user_id && reservation.tickets.count >= NUM_OF_TICKETS_TO_GET_DISCOUNT
       ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
       true
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e

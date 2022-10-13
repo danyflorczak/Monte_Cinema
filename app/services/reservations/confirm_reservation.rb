@@ -9,6 +9,7 @@ module Reservations
     def call
       return false unless reservation.booked?
 
+      create_promo_code if reservation.user_id? && reservation.tickets.count >= NUM_OF_TICKETS_TO_GET_DISCOUNT
       reservation.update(status: :confirmed)
     end
 
