@@ -56,3 +56,5 @@ gem "sentry-ruby", '~> 5.5.0'
 gem "sentry-delayed_job", '~> 5.5.0'
 gem "sentry-sidekiq", '~> 5.5.0'
 
+
+gem "sendgrid-ruby", "~> 6.6"
