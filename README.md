@@ -50,3 +50,9 @@ App have few addons:
 Link to Api documentation: </br>
 https://documenter.getpostman.com/view/20280442/2s83zjt3y2#07a9a79e-32f7-4bb5-a21a-e9aa4dc7f505
 
+## TO DO's
+
+- [ ] Change api to be more flexible and secure
+- [ ] Make emails work on heroku
+- [ ] Write more tests 
+
