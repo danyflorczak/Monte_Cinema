@@ -80,6 +80,7 @@ Metrics/BlockLength:
   Exclude:
   - spec/**/*.rb
   - db/seeds.rb
+  - db/schema.rb
   - lib/**/*
 
 Metrics/ModuleLength:
