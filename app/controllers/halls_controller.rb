@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HallsController < ApplicationController
-  before_action :set_hall, only: %i[show edit update destroy]
+  before_action :set_hall, only: %i(show edit update destroy)
   before_action :authenticate_user!
 
   def index
@@ -27,7 +27,7 @@ class HallsController < ApplicationController
     @hall = ::Halls::Create.new(hall_params).call
 
     if @hall.valid?
-      redirect_to hall_url(@hall), notice: 'Hall was successfully created.'
+      redirect_to hall_url(@hall), notice: "Hall was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class HallsController < ApplicationController
     if @hall.errors.any?
       render :edit, status: :unprocessable_entity
     else
-      redirect_to hall_url(@hall), notice: 'Hall was successfully updated.'
+      redirect_to hall_url(@hall), notice: "Hall was successfully updated."
     end
   end
 
@@ -48,7 +48,7 @@ class HallsController < ApplicationController
     authorize Hall
     ::Halls::Delete.new(params[:id]).call
 
-    redirect_to halls_url, notice: 'Hall was successfully destroyed.'
+    redirect_to halls_url, notice: "Hall was successfully destroyed."
   end
 
   private

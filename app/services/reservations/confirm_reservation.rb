@@ -20,9 +20,9 @@ module Reservations
     def create_promo_code
       Promotion.create(
         value: PROMO_VALUE,
-        description: 'Use code at cash desk in our Cinema and get price cut for our assortment in food bar!',
+        description: "Use code at cash desk in our Cinema and get price cut for our assortment in food bar!",
         code: rand(1000..3000),
-        user_id: reservation.user_id
+        user_id: reservation.user_id,
       )
     end
   end

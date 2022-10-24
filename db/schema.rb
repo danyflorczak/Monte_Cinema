@@ -14,82 +14,82 @@
 
 ActiveRecord::Schema[7.0].define(version: 20_221_009_200_439) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'halls', force: :cascade do |t|
-    t.integer 'capacity', null: false
-    t.string 'name', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "halls", force: :cascade do |t|
+    t.integer "capacity", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'movies', force: :cascade do |t|
-    t.string 'title', null: false
-    t.text 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer 'duration'
+  create_table "movies", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "duration"
   end
 
-  create_table 'promotions', force: :cascade do |t|
-    t.integer 'value', null: false
-    t.string 'description', null: false
-    t.integer 'code'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.bigint 'user_id'
-    t.index ['user_id'], name: 'index_promotions_on_user_id'
+  create_table "promotions", force: :cascade do |t|
+    t.integer "value", null: false
+    t.string "description", null: false
+    t.integer "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_promotions_on_user_id"
   end
 
-  create_table 'reservations', force: :cascade do |t|
-    t.integer 'status', default: 0, null: false
-    t.bigint 'screening_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.bigint 'user_id'
-    t.string 'email', null: false
-    t.index ['screening_id'], name: 'index_reservations_on_screening_id'
-    t.index ['user_id'], name: 'index_reservations_on_user_id'
+  create_table "reservations", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.bigint "screening_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "email", null: false
+    t.index ["screening_id"], name: "index_reservations_on_screening_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
-  create_table 'screenings', force: :cascade do |t|
-    t.datetime 'start_time', null: false
-    t.datetime 'end_time', null: false
-    t.float 'price'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.bigint 'movie_id', null: false
-    t.bigint 'hall_id', null: false
-    t.index ['hall_id'], name: 'index_screenings_on_hall_id'
-    t.index ['movie_id'], name: 'index_screenings_on_movie_id'
+  create_table "screenings", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "movie_id", null: false
+    t.bigint "hall_id", null: false
+    t.index ["hall_id"], name: "index_screenings_on_hall_id"
+    t.index ["movie_id"], name: "index_screenings_on_movie_id"
   end
 
-  create_table 'tickets', force: :cascade do |t|
-    t.string 'seat', null: false
-    t.bigint 'reservation_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['reservation_id'], name: 'index_tickets_on_reservation_id'
+  create_table "tickets", force: :cascade do |t|
+    t.string "seat", null: false
+    t.bigint "reservation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_tickets_on_reservation_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.integer 'role', default: 0, null: false
-    t.string 'confirmation_token'
-    t.datetime 'confirmed_at'
-    t.datetime 'confirmation_sent_at'
-    t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "role", default: 0, null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key 'promotions', 'users'
-  add_foreign_key 'reservations', 'screenings'
-  add_foreign_key 'reservations', 'users'
-  add_foreign_key 'screenings', 'halls'
-  add_foreign_key 'screenings', 'movies'
+  add_foreign_key "promotions", "users"
+  add_foreign_key "reservations", "screenings"
+  add_foreign_key "reservations", "users"
+  add_foreign_key "screenings", "halls"
+  add_foreign_key "screenings", "movies"
 end

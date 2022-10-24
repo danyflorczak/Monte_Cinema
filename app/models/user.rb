@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+    :recoverable, :rememberable, :validatable, :confirmable
   enum role: { client: 0, manager: 1 }
   has_many :reservations
   has_many :promotions
@@ -10,6 +10,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   validate do
-    errors.add(:base, 'Password is too long') if password.bytesize > 72
+    errors.add(:base, "Password is too long") if password.bytesize > 72
   end
 end

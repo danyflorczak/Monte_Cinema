@@ -2,9 +2,9 @@
 
 class ReservationsController < ApplicationController
   protect_from_forgery except: :create_without_registration
-  before_action :set_screening, only: %i[new create create_at_desk create_without_registration]
-  before_action :set_reservation, only: %i[confirm cancel]
-  before_action :authenticate_user!, except: %i[new create_without_registration]
+  before_action :set_screening, only: %i(new create create_at_desk create_without_registration)
+  before_action :set_reservation, only: %i(confirm cancel)
+  before_action :authenticate_user!, except: %i(new create_without_registration)
 
   def index
     @pagy, @reservations = pagy(policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user))
@@ -18,10 +18,10 @@ class ReservationsController < ApplicationController
   def create
     authorize Reservation
     @reservation = ::Reservations::Create.new(**{ user_id: current_user.id, email: current_user.email, screening_id: params[:screening_id],
-                                                  seats: params[:seats], status: :booked })
+                                                  seats: params[:seats], status: :booked, })
 
     if @reservation.call
-      redirect_to movies_path, notice: 'Reservation successfully created'
+      redirect_to movies_path, notice: "Reservation successfully created"
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,10 +30,10 @@ class ReservationsController < ApplicationController
   def create_at_desk
     authorize Reservation
     @reservation = ::Reservations::Create.new(**{ screening_id: params[:screening_id], seats: params[:seats],
-                                                  email: 'Created at desk', status: :confirmed })
+                                                  email: "Created at desk", status: :confirmed, })
 
     if @reservation.call
-      redirect_to movies_path, notice: 'Reservation successfully created'
+      redirect_to movies_path, notice: "Reservation successfully created"
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,12 +42,12 @@ class ReservationsController < ApplicationController
   def create_without_registration
     authorize Reservation
     @reservation = ::Reservations::Create.new(**{ email: params[:email], screening_id: params[:screening_id],
-                                                  seats: params[:seats], status: :booked })
+                                                  seats: params[:seats], status: :booked, })
 
     respond_to do |format|
       if @reservation.call
         @created_reservation = @reservation.created_reservation
-        format.html { redirect_to movies_path, notice: 'Reservation successfully created' }
+        format.html { redirect_to movies_path, notice: "Reservation successfully created" }
         format.json { render :show, status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -59,7 +59,7 @@ class ReservationsController < ApplicationController
   def cancel
     cancelation = ::Reservations::CancelReservation.new(@reservation)
     if cancelation.call
-      redirect_to reservations_path, notice: 'Reservation canceled'
+      redirect_to reservations_path, notice: "Reservation canceled"
     else
       redirect_back fallback_location: reservations_path, alert: "Confirmed reservations can't be canceled!"
     end
@@ -68,7 +68,7 @@ class ReservationsController < ApplicationController
   def confirm
     confirmation = ::Reservations::ConfirmReservation.new(@reservation)
     if confirmation.call
-      redirect_to reservations_path, notice: 'Reservation confirmed'
+      redirect_to reservations_path, notice: "Reservation confirmed"
     else
       redirect_back fallback_location: reservations_path, alert: "Canceled reservations can't be confirmed!"
     end

@@ -42,7 +42,7 @@ module Reservations
       if (screening.all_taken_seats & seats).empty? && !(screening.available_seats & seats).empty?
         true
       else
-        errors << 'Seats already taken or incorrect'
+        errors << "Seats already taken or incorrect"
         false
       end
     end
@@ -55,10 +55,10 @@ module Reservations
 
     def seats_selected?
       if seats.nil?
-        errors << 'Please select your seat(s)'
+        errors << "Please select your seat(s)"
         return false
       elsif seats.empty?
-        errors << 'Please select your seat(s)'
+        errors << "Please select your seat(s)"
         return false
       end
       true

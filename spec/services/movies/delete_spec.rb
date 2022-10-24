@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Movies::Delete do
   let!(:movie) { create :movie }
@@ -8,8 +8,8 @@ RSpec.describe Movies::Delete do
 
   subject { instance.call }
 
-  describe '.call' do
-    it 'deletes movie' do
+  describe ".call" do
+    it "deletes movie" do
       expect { subject }.to change { Movie.count }.by(-1)
     end
   end

@@ -21,7 +21,7 @@ module Reservations
     attr_reader :reservation
 
     def booked?
-      reservation.status == 'booked'
+      reservation.status == "booked"
     end
   end
 end

@@ -3,7 +3,7 @@
 class ReservationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.role == 'manager'
+      if user.role == "manager"
         scope.all
       else
         scope.where(user_id: user.id)
@@ -42,10 +42,10 @@ class ReservationPolicy < ApplicationPolicy
   private
 
   def manager?
-    user.role == 'manager'
+    user.role == "manager"
   end
 
   def client?
-    user.role == 'client'
+    user.role == "client"
   end
 end
