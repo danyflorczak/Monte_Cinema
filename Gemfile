@@ -36,6 +36,7 @@ group :development do
   gem 'bullet', '~> 7.0', '>= 7.0.3'
   gem 'lefthook', '~> 1.1.1'
   gem 'rubocop', '~> 1.36', require: false
+  gem 'rubocop-performance', require: false
   gem 'web-console'
 end
 
