@@ -32,10 +32,10 @@ class ScreeningPolicy < ApplicationPolicy
   private
 
   def manager?
-    user.role == 'manager'
+    user.role == "manager"
   end
 
   def client?
-    user.role == 'client'
+    user.role == "client"
   end
 end

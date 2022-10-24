@@ -31,7 +31,7 @@ class Screening < ApplicationRecord
   end
 
   def used?
-    errors.add(:base, 'Hall is already used for another screening') if overlaps?
+    errors.add(:base, "Hall is already used for another screening") if overlaps?
   end
 
   private

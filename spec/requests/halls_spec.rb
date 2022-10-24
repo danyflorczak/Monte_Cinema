@@ -1,150 +1,150 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe '/halls', type: :request do
+RSpec.describe "/halls", type: :request do
   let(:user) { create :user }
-  let(:manager) { create :user, email: 'admin@gmail.com', role: :manager }
-  describe 'GET /halls' do
-    context 'when user not signed in' do
-      it 'redirects to sign_in' do
-        get('/halls')
-        expect(response).to redirect_to('/users/sign_in')
+  let(:manager) { create :user, email: "admin@gmail.com", role: :manager }
+  describe "GET /halls" do
+    context "when user not signed in" do
+      it "redirects to sign_in" do
+        get("/halls")
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
-        get('/halls')
+      it "returns redirect status" do
+        get("/halls")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
-        get('/halls')
-        expect(response).to redirect_to('/')
+      it "redirects to root" do
+        get("/halls")
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
-        get('/halls')
+      it "returns redirect status" do
+        get("/halls")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns successful response' do
-        get('/halls')
+      it "returns successful response" do
+        get("/halls")
         expect(response.status).to eq(200)
       end
 
-      it 'renders proper template' do
-        get('/halls')
-        expect(response).to render_template('halls/index')
+      it "renders proper template" do
+        get("/halls")
+        expect(response).to render_template("halls/index")
       end
     end
   end
 
-  describe 'GET /halls/new' do
-    context 'when no user' do
-      it 'redirects to sign_in' do
-        get('/halls/new')
-        expect(response).to redirect_to('/users/sign_in')
+  describe "GET /halls/new" do
+    context "when no user" do
+      it "redirects to sign_in" do
+        get("/halls/new")
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
-        get('/halls/new')
+      it "returns redirect status" do
+        get("/halls/new")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
-        get('/halls/new')
-        expect(response).to redirect_to('/')
+      it "redirects to root" do
+        get("/halls/new")
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
-        get('/halls/new')
+      it "returns redirect status" do
+        get("/halls/new")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns successful response' do
-        get('/halls/new')
+      it "returns successful response" do
+        get("/halls/new")
         expect(response.status).to eq(200)
       end
 
-      it 'renders proper template' do
-        get('/halls/new')
-        expect(response).to render_template('halls/new')
+      it "renders proper template" do
+        get("/halls/new")
+        expect(response).to render_template("halls/new")
       end
     end
   end
 
-  describe 'POST /halls' do
+  describe "POST /halls" do
     let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
     let(:name) { Faker::FunnyName.name }
     let(:capacity) { Faker::Number.number(digits: 2) }
 
-    context 'when no user' do
-      it 'redirects to sign_in' do
-        post('/halls')
-        expect(response).to redirect_to('/users/sign_in')
+    context "when no user" do
+      it "redirects to sign_in" do
+        post("/halls")
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
-        post('/halls')
+      it "returns redirect status" do
+        post("/halls")
         expect(response.status).to eq(302)
       end
 
-      it 'does not create a hall ' do
-        expect { post('/halls', params:) }.not_to change(Hall, :count)
+      it "does not create a hall " do
+        expect { post("/halls", params:) }.not_to change(Hall, :count)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
-        post('/halls', params:)
-        expect(response).to redirect_to('/')
+      it "redirects to root" do
+        post("/halls", params:)
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
-        post('/halls')
+      it "returns redirect status" do
+        post("/halls")
         expect(response.status).to eq(302)
       end
 
-      it 'does not create a hall' do
-        expect { post('/halls', params:) }.not_to change(Hall, :count)
+      it "does not create a hall" do
+        expect { post("/halls", params:) }.not_to change(Hall, :count)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns redirect status' do
-        post('/halls', params:)
+      it "returns redirect status" do
+        post("/halls", params:)
         expect(response.status).to eq(302)
       end
 
-      it 'creates hall' do
-        expect { post('/halls', params:) }.to change(Hall, :count).by(1)
+      it "creates hall" do
+        expect { post("/halls", params:) }.to change(Hall, :count).by(1)
       end
     end
 
-    context 'when params invalid' do
+    context "when params invalid" do
       before { sign_in manager }
-      let(:capacity) { 's' }
+      let(:capacity) { "s" }
 
       it "doesn't create hall" do
-        expect { post('/halls', params:) }.not_to change(Hall, :count)
+        expect { post("/halls", params:) }.not_to change(Hall, :count)
       end
 
-      it 'returns unsuccessful response' do
-        post('/halls', params:)
+      it "returns unsuccessful response" do
+        post("/halls", params:)
         expect(response.status).to eq(422)
       end
 
@@ -152,110 +152,110 @@ RSpec.describe '/halls', type: :request do
       let(:name) { nil }
 
       it "doesn't create hall" do
-        expect { post('/halls', params:) }.not_to change(Hall, :count)
+        expect { post("/halls", params:) }.not_to change(Hall, :count)
       end
 
-      it 'returns unsuccessful response' do
-        post('/halls', params:)
+      it "returns unsuccessful response" do
+        post("/halls", params:)
         expect(response.status).to eq(422)
       end
     end
   end
 
-  describe 'GET /halls/hall_id/edit' do
+  describe "GET /halls/hall_id/edit" do
     let(:hall) { create :hall }
-    context 'when user not signed in' do
-      it 'redirects to sign_in' do
+    context "when user not signed in" do
+      it "redirects to sign_in" do
         get("/halls/#{hall.id}/edit")
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         get("/halls/#{hall.id}/edit")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
+      it "redirects to root" do
         get("/halls/#{hall.id}/edit")
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         get("/halls/#{hall.id}/edit")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns successful response' do
+      it "returns successful response" do
         get("/halls/#{hall.id}/edit")
         expect(response.status).to eq(200)
       end
 
-      it 'renders proper template' do
+      it "renders proper template" do
         get("/halls/#{hall.id}/edit")
-        expect(response).to render_template('halls/edit')
+        expect(response).to render_template("halls/edit")
       end
     end
   end
 
-  describe 'PATCH /halls' do
+  describe "PATCH /halls" do
     let(:hall) { create :hall }
     let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
 
     let(:name) { "Hall #{Faker::Number.number(digits: 1)}" }
     let(:capacity) { Faker::Number.number(digits: 2) }
 
-    context 'when user not signed in' do
-      it 'redirects to sign_in' do
+    context "when user not signed in" do
+      it "redirects to sign_in" do
         patch("/halls/#{hall.id}", params:)
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         patch("/halls/#{hall.id}")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
+      it "redirects to root" do
         patch("/halls/#{hall.id}", params:)
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         patch("/halls/#{hall.id}")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns redirect status' do
+      it "returns redirect status" do
         patch("/halls/#{hall.id}", params:)
         expect(response.status).to eq(302)
       end
 
-      it 'updates hall' do
+      it "updates hall" do
         expect { patch("/halls/#{hall.id}", params:) }.to change { hall.reload.name }.from(hall.name).to(name.to_s)
       end
     end
 
-    context 'when params invalid' do
+    context "when params invalid" do
       before { sign_in manager }
-      let(:duration) { 's' }
+      let(:duration) { "s" }
 
       it "doesn't create hall" do
         expect { patch("/halls/#{hall.id}", params:) }.not_to(change { hall.reload.name })
       end
 
-      it 'returns unsuccessful response' do
+      it "returns unsuccessful response" do
         patch("/halls/#{hall.id}", params:)
         expect(response.status).to eq(422)
       end
@@ -267,53 +267,53 @@ RSpec.describe '/halls', type: :request do
         expect { patch("/halls/#{hall.id}", params:) }.not_to(change { hall.reload.name })
       end
 
-      it 'returns unsuccessful response' do
+      it "returns unsuccessful response" do
         patch("/halls/#{hall.id}", params:)
         expect(response.status).to eq(422)
       end
     end
   end
 
-  describe 'DELETE /halls' do
+  describe "DELETE /halls" do
     let!(:hall) { create :hall }
-    context 'when user not signed in' do
-      it 'redirects to sign_in' do
+    context "when user not signed in" do
+      it "redirects to sign_in" do
         delete("/halls/#{hall.id}")
-        expect(response).to redirect_to('/users/sign_in')
+        expect(response).to redirect_to("/users/sign_in")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         delete("/halls/#{hall.id}")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user without permission' do
+    context "when user without permission" do
       before { sign_in user }
-      it 'redirects to root' do
+      it "redirects to root" do
         delete("/halls/#{hall.id}")
-        expect(response).to redirect_to('/')
+        expect(response).to redirect_to("/")
       end
 
-      it 'returns redirect status' do
+      it "returns redirect status" do
         delete("/halls/#{hall.id}")
         expect(response.status).to eq(302)
       end
     end
 
-    context 'when user with permission' do
+    context "when user with permission" do
       before { sign_in manager }
-      it 'returns redirect status' do
+      it "returns redirect status" do
         delete("/halls/#{hall.id}")
         expect(response.status).to eq(302)
       end
 
-      it 'redirects to /halls' do
+      it "redirects to /halls" do
         delete("/halls/#{hall.id}")
-        expect(response).to redirect_to('/halls')
+        expect(response).to redirect_to("/halls")
       end
 
-      it 'destroy hall record' do
+      it "destroy hall record" do
         expect { delete("/halls/#{hall.id}") }.to change(Hall, :count)
       end
     end

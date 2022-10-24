@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :user do
-    email { 'test@gmail.com' }
-    password { 'password' }
+    email { "test@gmail.com" }
+    password { "password" }
     role { :client }
     before(:create, &:skip_confirmation!)
   end
