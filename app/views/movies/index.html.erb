@@ -5,11 +5,9 @@
     <div class="card m-3 bg-dark text-white" style="width: 30rem;">
       <div class="card-body">
         <%= render movie %>
-        <%if current_user.present?%>
-          <p>
-            <%= link_to "Show this movie", movie, class: "btn btn-outline-primary m-2" %>
-          </p>
-        <% end %>
+        <p>
+          <%= link_to "Show this movie", movie, class: "btn btn-outline-primary m-2" %>
+        </p>
       </div>
     </div>
 
