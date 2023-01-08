@@ -1,5 +1,6 @@
 ## Monte Cinema
-Rubycamp Project :D
+Project for imaginary cinema that allows user to book tickets for a movies 
+
 
 ## Tech Stack
 
@@ -32,19 +33,6 @@ $ sidekiq
 # Run Tests:
 $ rspec
 ```
-## Live App 
-App is deployed on Heroku and you can find it here: </br>
-https://monte-cinema-v1.herokuapp.com/ </br>
-TESTS USERS: </br>
-- login: test@manager.com, password: 'password'
-- login: test@client.com, password: 'password'
-</br>
-App have few addons:
-- Heroku Redis
-- Sentry
-- email sending ( in progress )
-- generally speaking app is almost complete beside sending emails to user which is in progress
-
 
 ## Api Documentation
 Link to Api documentation: </br>
