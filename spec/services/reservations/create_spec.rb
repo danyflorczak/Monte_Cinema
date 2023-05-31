@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Reservations::Create do
-  let(:screening) { create :screening }
+  let(:screening) { create(:screening) }
   let(:params) do
     {
       screening_id: screening.id,
@@ -15,13 +15,13 @@ RSpec.describe Reservations::Create do
 
   subject { described_class.new(**params) }
 
-  describe ".call" do
-    it "creates reservation" do
+  describe "#call" do
+    it "creates a reservation" do
       expect { subject.call }.to change { Reservation.count }.by(1)
     end
 
-    it "create tickets" do
-      expect { subject.call }.to change(Ticket, :count)
+    it "creates tickets" do
+      expect { subject.call }.to change { Ticket.count }
     end
   end
 end

@@ -2,44 +2,39 @@
 
 module Reservations
   class Create
-    def initialize(**kwargs)
-      @user_id = kwargs[:user_id]
-      @email = kwargs[:email]
-      @screening_id = kwargs[:screening_id]
-      @status = kwargs[:status]
-      @seats = kwargs[:seats]
+    def initialize(email:, screening_id:, status:, seats:, user_id: nil)
+      @user_id = user_id
+      @email = email
+      @screening_id = screening_id
+      @status = status
+      @seats = seats
       @errors = []
-      @reservation = Reservation.new(screening_id: @screening_id, user_id: @user_id, email: @email, status: @status)
     end
 
-    attr_reader :errors
+    attr_reader :errors, :reservation
 
     def call
       return false unless seats_selected? && seats_available?
 
       ActiveRecord::Base.transaction do
-        reservation.save!
+        @reservation = Reservation.create!(screening_id: @screening_id, user_id: @user_id, email: @email,
+          status: @status,)
         create_tickets
       end
 
-      ReservationMailer.with(reservation:).reservation_created.deliver_later unless @status == :confirmed
+      ReservationMailer.with(reservation: @reservation).reservation_created.deliver_later unless @status == :confirmed
       true
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       errors << "Booking reservation failed!, errors that prohibited from saving: #{e.message}"
       false
     end
 
-    def created_reservation
-      reservation
-    end
-
     private
 
-    attr_reader :seats, :reservation
-
     def seats_available?
-      screening = Screening.find(@screening_id)
-      if (screening.all_taken_seats & seats).empty? && !(screening.available_seats & seats).empty?
+      screening = Screening.find_by(id: @screening_id)
+
+      if screening&.all_taken_seats&.intersection(@seats)&.empty? && screening&.available_seats&.intersection(@seats)&.any?
         true
       else
         errors << "Seats already taken or incorrect"
@@ -48,16 +43,13 @@ module Reservations
     end
 
     def create_tickets
-      seats.each do |seat|
-        reservation.tickets.create(seat:)
+      @seats.each do |seat|
+        @reservation.tickets.create(seat:)
       end
     end
 
     def seats_selected?
-      if seats.nil?
-        errors << "Please select your seat(s)"
-        return false
-      elsif seats.empty?
+      if @seats.nil? || @seats.empty?
         errors << "Please select your seat(s)"
         return false
       end

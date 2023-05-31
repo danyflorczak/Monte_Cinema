@@ -17,8 +17,7 @@ class ReservationsController < ApplicationController
 
   def create
     authorize Reservation
-    @reservation = ::Reservations::Create.new(**{ user_id: current_user.id, email: current_user.email, screening_id: params[:screening_id],
-                                                  seats: params[:seats], status: :booked, })
+    @reservation = create_reservation(current_user.id, current_user.email, :booked)
 
     if @reservation.call
       redirect_to movies_path, notice: "Reservation successfully created"
@@ -29,8 +28,7 @@ class ReservationsController < ApplicationController
 
   def create_at_desk
     authorize Reservation
-    @reservation = ::Reservations::Create.new(**{ screening_id: params[:screening_id], seats: params[:seats],
-                                                  email: "Created at desk", status: :confirmed, })
+    @reservation = create_reservation(nil, "Created at desk", :confirmed)
 
     if @reservation.call
       redirect_to movies_path, notice: "Reservation successfully created"
@@ -41,12 +39,10 @@ class ReservationsController < ApplicationController
 
   def create_without_registration
     authorize Reservation
-    @reservation = ::Reservations::Create.new(**{ email: params[:email], screening_id: params[:screening_id],
-                                                  seats: params[:seats], status: :booked, })
+    @reservation = create_reservation(nil, params[:email], :booked)
 
     respond_to do |format|
       if @reservation.call
-        @created_reservation = @reservation.created_reservation
         format.html { redirect_to movies_path, notice: "Reservation successfully created" }
         format.json { render :show, status: :created }
       else
@@ -82,6 +78,16 @@ class ReservationsController < ApplicationController
 
   def set_reservation
     @reservation = Reservation.includes(:tickets, :screening, :hall, :movie).find(params[:reservation_id])
+  end
+
+  def create_reservation(user_id, email, status)
+    ::Reservations::Create.new(
+      user_id:,
+      email:,
+      screening_id: params[:screening_id],
+      seats: params[:seats],
+      status:,
+    )
   end
 
   def reservation_params
