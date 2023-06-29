@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
-  protect_from_forgery except: :create_without_registration
   before_action :set_screening, only: %i(new create create_at_desk create_without_registration)
   before_action :set_reservation, only: %i(confirm cancel)
   before_action :authenticate_user!, except: %i(new create_without_registration)
@@ -41,14 +40,10 @@ class ReservationsController < ApplicationController
     authorize Reservation
     @reservation = create_reservation(nil, params[:email], :booked)
 
-    respond_to do |format|
-      if @reservation.call
-        format.html { redirect_to movies_path, notice: "Reservation successfully created" }
-        format.json { render :show, status: :created }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.call
+      redirect_to movies_path, notice: "Reservation successfully created"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
