@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
-  protect_from_forgery except: :create_without_registration
   before_action :set_screening, only: %i(new create create_at_desk create_without_registration)
   before_action :set_reservation, only: %i(confirm cancel)
   before_action :authenticate_user!, except: %i(new create_without_registration)
