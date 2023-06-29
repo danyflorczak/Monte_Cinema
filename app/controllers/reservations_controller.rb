@@ -41,14 +41,10 @@ class ReservationsController < ApplicationController
     authorize Reservation
     @reservation = create_reservation(nil, params[:email], :booked)
 
-    respond_to do |format|
-      if @reservation.call
-        format.html { redirect_to movies_path, notice: "Reservation successfully created" }
-        format.json { render :show, status: :created }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.call
+      redirect_to movies_path, notice: "Reservation successfully created"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
