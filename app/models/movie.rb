@@ -3,6 +3,7 @@
 class Movie < ApplicationRecord
   has_many :screenings, dependent: :destroy
   has_many :halls, through: :screenings
+  
   validates_associated :screenings, :halls
   validates :title, :description, :duration, presence: true
   validates :title, uniqueness: true
