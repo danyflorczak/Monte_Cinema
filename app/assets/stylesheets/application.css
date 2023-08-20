@@ -95,3 +95,6 @@
   font-weight: 500;
 }
 
+#main-menu a:hover {
+  color: white;
+}
