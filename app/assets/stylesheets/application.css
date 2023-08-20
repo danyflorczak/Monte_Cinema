@@ -16,6 +16,9 @@
  body{
   background-color: #242333 !important;
   color: white !important;
+  font-family: roboto,helvetica neue,helvetica,arial,serif!important;
+  font-weight: 300;
+  font-size: 14px;
  }
 
  .seat {
@@ -51,3 +54,44 @@
   transform: rotateX(-45deg) !important;
   box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7) !important;
 }
+#header-nav {
+  background-color: #000 !important;
+  height: 85px !important;
+  color: white;
+  padding-left:200px !important;
+  padding-right:200px !important;
+}
+
+#header-nav a {
+  text-decoration: none;
+  color: white;
+}
+
+.login-btn {
+  background-color: #f5821e !important;
+  color: #000 !important;
+}
+#main-menu {
+  background-color: #f5821e !important;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,.5);
+  height: 50px;
+  color: black;
+  padding-left:200px !important;
+  padding-right:200px !important;
+}
+#main-menu li {
+  border-left: 1px solid black;
+}
+#main-menu li:last-child {
+  border-right: 1px solid black;
+}
+#main-menu a {
+  text-decoration: none;
+  color: #000;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
