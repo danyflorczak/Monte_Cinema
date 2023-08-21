@@ -10,6 +10,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   validate do
-    errors.add(:base, "Password is too long") if password.bytesize > 72
+    errors.add(:base, "Password is too long") if password.present? && (password.bytesize > 72)
   end
 end

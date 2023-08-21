@@ -10,6 +10,8 @@ module Screenings
     def call
       screening = Screening.find(screening_id)
       screening.update(params)
+      screening.set_end_time
+      screening.save
       screening
     end
 

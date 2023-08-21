@@ -4,9 +4,8 @@ class Screening < ApplicationRecord
   belongs_to :movie
   belongs_to :hall
   has_many :reservations, dependent: :destroy
-  before_validation :set_end_time, unless: :start_nil?
-  validates :end_time, comparison: { greater_than: :start_time }
-  validates :start_time, :end_time, :price, presence: true
+
+  validates :start_time, :price, presence: true
   validates :price, numericality: { greater_than: 0 }
   validate :used?
 
@@ -19,6 +18,8 @@ class Screening < ApplicationRecord
   end
 
   def set_end_time
+    return unless start_time_changed?
+
     self.end_time = start_time + movie.duration.minutes + ADS_TIME
   end
 

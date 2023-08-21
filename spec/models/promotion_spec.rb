@@ -3,10 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Promotion, type: :model do
-  before do
-    create(:promotion)
-  end
-
   describe "associations" do
     it { is_expected.to belong_to(:user) }
   end
