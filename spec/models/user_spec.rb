@@ -3,10 +3,6 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  before do
-    create(:user)
-  end
-
   describe "associations" do
     it { is_expected.to have_many(:reservations) }
     it { is_expected.to have_many(:promotions) }

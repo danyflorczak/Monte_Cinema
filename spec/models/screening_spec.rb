@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Screening, type: :model do
   before do
-    create(:screening)
+    build(:screening)
   end
 
   describe "associations" do

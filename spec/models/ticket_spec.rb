@@ -3,10 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Ticket, type: :model do
-  before do
-    create(:ticket)
-  end
-
   describe "associations" do
     it { is_expected.to belong_to(:reservation) }
   end
