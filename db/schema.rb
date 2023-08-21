@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_221_009_200_439) do
+ActiveRecord::Schema[7.0].define(version: 20_230_821_111_740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 20_221_009_200_439) do
 
   create_table "screenings", force: :cascade do |t|
     t.datetime "start_time", null: false
-    t.datetime "end_time", null: false
+    t.datetime "end_time"
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

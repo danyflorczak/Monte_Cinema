@@ -7,7 +7,10 @@ module Screenings
     end
 
     def call
-      Screening.create(params)
+      screening = Screening.create(params)
+      screening.set_end_time
+      screening.save
+      screening
     end
 
     private
