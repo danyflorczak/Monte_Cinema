@@ -1,7 +1,34 @@
-<footer class="text-center text-white mt-auto bg-dark">
+<hr>
+<footer class="text-white mt-auto">
   <!-- Copyright -->
+  <div class="row text-padding-center">
+    <div class="col footer-links">
+      <h5> About us </h5>
+      <%= link_to "Work with us", "#" %><br>
+      <%= link_to "Newsletter", "#" %><br>
+      <%= link_to "Contact", "#" %><br>
+    </div>
+    <div class="col footer-links">
+      <h5> Links </h5>
+      <a href="https://www.linkedin.com/in/danyflorczak/">
+        <%= image_tag "linkedin.png", size: "20x20" %>
+        Linkedin
+      </a>
+      <br>
+      <a href="https://github.com/danyflorczak">
+        <%= image_tag "github.png", size: "20x20" %>
+        Github
+      </a>
+    </div>
+    <div class="col footer-links">
+      <h5> Info </h5>
+      <%= link_to "New Movies", movies_path %><br>
+      <%= link_to "Regulations", "#" %><br>
+      <%= link_to "Learn More", about_path %><br>
+    </div>
+  </div>
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2022 Copyright: 
+    © 2023 Copyright: 
     <%= link_to "MonteCinema", root_path, class: "text-white" %>
   </div>
   <!-- Copyright -->
