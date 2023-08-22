@@ -28,8 +28,8 @@
   <h2 class="text-padding-center py-4">Buy Ticket</h2>
   <div class="row">
     <% @movies.each do |movie| %>
-      <div class="col-md-4 mb-4 text-dark">
-        <div class="card">
+      <div class="col-md-2 text-dark">
+        <div class="card mt-2 mb-2">
           <%= image_tag movie.poster_image, size: "230x340" %>
           <div class="card-body">
             <h5 class="card-title"><%= movie.title %></h5>
