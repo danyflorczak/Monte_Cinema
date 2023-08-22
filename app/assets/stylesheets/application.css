@@ -103,3 +103,13 @@
   padding-left:200px !important;
   padding-right:200px !important;
 }
+.card {
+  background-color: #000;
+  border: solid .5px #f5821e;
+  color: white;
+  box-shadow: 0 2px 8px 0 #f5821e;
+}
+.card-title {
+  font-weight: 400 !important;
+  font-size: 14px !important; 
+}

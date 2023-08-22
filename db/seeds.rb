@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "faker"
+require "open-uri"
 
 hall_capacities = [20, 50, 100, 200]
-
 10.times do
   Hall.create(
     name: Faker::FunnyName.name,
@@ -11,11 +11,15 @@ hall_capacities = [20, 50, 100, 200]
   )
 end
 10.times do
-  Movie.create(
+  movie = Movie.create(
     title: Faker::Movie.title,
     description: Faker::Movie.quote,
     duration: rand(90..189),
   )
+  image_url = "#{Faker::LoremFlickr.image}"
+  filename = File.basename(image_url)
+  file = URI.open(image_url)
+  movie.poster_image.attach(io: file, filename: filename)
 end
 
 200.times do
