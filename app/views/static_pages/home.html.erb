@@ -30,7 +30,7 @@
     <% @movies.each do |movie| %>
       <div class="col-md-4 mb-4 text-dark">
         <div class="card">
-          <%= movie.title %>
+          <%= image_tag movie.poster_image, size: "230x340" %>
           <div class="card-body">
             <h5 class="card-title"><%= movie.title %></h5>
             <!-- Add more movie information here if needed -->
