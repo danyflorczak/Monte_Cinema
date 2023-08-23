@@ -2,7 +2,8 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable, :confirmable
+    :recoverable, :rememberable, :validatable,
+    :omniauthable, omniauth_providers: [:google_oauth2]
   enum role: { client: 0, manager: 1 }
   has_many :reservations
   has_many :promotions
