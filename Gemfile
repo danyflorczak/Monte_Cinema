@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.2"
 gem "importmap-rails"
 gem "jbuilder"
-gem 'open-uri', '~> 0.3.0'
+gem "open-uri", "~> 0.3.0"
 gem "pagy", "~> 5.10"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
@@ -20,6 +20,9 @@ gem "faker", "~> 2.23"
 # User Authentication
 gem "devise", "~> 4.8", ">= 4.8.1"
 gem "pundit", "~> 2.2"
+gem "omniauth", "~> 2.1", ">= 2.1.1"
+gem "omniauth-google-oauth2", "~> 1.1", ">= 1.1.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0", ">= 1.0.1"
 
 gem "tzinfo-data", platforms: %i(mingw mswin x64_mingw jruby)
 

@@ -16,10 +16,10 @@ end
     description: Faker::Movie.quote,
     duration: rand(90..189),
   )
-  image_url = "#{Faker::LoremFlickr.image}"
+  image_url = Faker::LoremFlickr.image.to_s
   filename = File.basename(image_url)
   file = URI.open(image_url)
-  movie.poster_image.attach(io: file, filename: filename)
+  movie.poster_image.attach(io: file, filename:)
 end
 
 200.times do
