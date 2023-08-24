@@ -100,8 +100,8 @@
 }
 
 .text-padding-center {
-  padding-left:200px !important;
-  padding-right:200px !important;
+  padding-left:270px !important;
+  padding-right:270px !important;
 }
 .card {
   background-color: #000;
@@ -128,4 +128,35 @@ footer a {
 
 footer a:hover {
   color: #fff;
+}
+#movie-card a {
+  text-decoration: none;
+}
+
+#movie-card a:hover {
+  text-decoration: underline;
+  text-decoration-color: #f5821e;
+}
+
+.relase-date-icon {
+  float: left ;
+  margin-right: 10px;
+}
+
+.duration-icon {
+  float: left;
+  margin-right: 10px;
+}
+
+.movie-description {
+ padding-top: 15px;
+ padding-bottom: 15px;
+}
+
+#buy-ticket-block {
+  height: 190px;
+}
+
+.bg-lightgray {
+  background-color: #F4F4F4 !important;
 }
