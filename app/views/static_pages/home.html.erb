@@ -31,7 +31,11 @@
       <div class="col-md-2 text-dark" id="movie-card">
         <%= link_to movie do %>
           <div class="card mt-2 mb-2">
-            <%= image_tag movie.poster_image, size: "230x340" %>
+            <% if movie.poster_image.present? %>
+              <%= image_tag movie.poster_image, size: "230x340" %>
+            <% else %>
+              <%= image_tag "default-movie.jpg", size: "230x340" %>
+            <% end %>
             <div class="card-body">
               <h5 class="card-title"><%= movie.title %></h5>
             </div>
