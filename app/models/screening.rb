@@ -18,7 +18,7 @@ class Screening < ApplicationRecord
   end
 
   def set_end_time
-    return unless start_time_changed?
+    return if start_nil?
 
     self.end_time = start_time + movie.duration.minutes + ADS_TIME
   end
