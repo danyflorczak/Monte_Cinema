@@ -22,7 +22,7 @@ end
   movie.poster_image.attach(io: file, filename:)
 end
 
-200.times do
+800.times do
   Screening.create(
     movie_id: Movie.all.sample.id,
     hall_id: Hall.all.sample.id,
@@ -36,7 +36,6 @@ manager = User.new(
   password: "password",
   role: "manager",
 )
-manager.skip_confirmation!
 manager.save!
 
 client = User.new(
@@ -44,5 +43,4 @@ client = User.new(
   password: "password",
   role: "client",
 )
-client.skip_confirmation!
 client.save!
