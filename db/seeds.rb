@@ -22,7 +22,7 @@ end
   movie.poster_image.attach(io: file, filename:)
 end
 
-800.times do
+200.times do
   screening_start_time = DateTime.current.beginning_of_minute + rand(7).days + rand(24).hours + rand(60).minutes
   Screening.create(
     movie_id: Movie.all.sample.id,
