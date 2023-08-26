@@ -160,3 +160,12 @@ footer a:hover {
 .bg-lightgray {
   background-color: #F4F4F4 !important;
 }
+
+.date-links a{
+  text-decoration: none !important;
+  color: #000 !important;
+}
+
+.date-links a:hover {
+  color: #ffc107 !important;  
+}
