@@ -6,7 +6,7 @@ module ScreeningHelper
     content_tag(:ul, class: "d-flex mb-3") do
       DAYS_NUMBER.times do |num|
         concat(link_to((Time.zone.today + num.days).strftime("%a %d/%m"),
-          movies_path(start_time: Time.zone.today + num.days), class: "mx-2",))
+          request.params.merge(start_time: Time.zone.today + num.days), class: "mx-2",))
       end
     end
   end
