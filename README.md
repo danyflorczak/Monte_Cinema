@@ -1,7 +1,3 @@
-## Monte Cinema
-Project for imaginary cinema that allows user to book tickets for a movies 
-
-
 ## Tech Stack
 
 - Ruby 3.1.2
