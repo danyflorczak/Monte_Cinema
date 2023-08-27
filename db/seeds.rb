@@ -15,7 +15,16 @@ end
     title: Faker::Movie.title,
     description: Faker::Movie.quote,
     duration: rand(90..189),
+    genre: Faker::Book.genre,
+    director: Faker::Name.name,
+    release_date: Faker::Date.between(from: 20.years.ago, to: Date.today),
   )
+  rand(1..5).times do
+    actor = Actor.create(
+      name: Faker::Name.name
+    )
+    movie.actors << actor
+  end
   image_url = Faker::LoremFlickr.image.to_s
   filename = File.basename(image_url)
   file = URI.open(image_url)
