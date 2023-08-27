@@ -3,6 +3,7 @@
 class Movie < ApplicationRecord
   has_many :screenings, dependent: :destroy
   has_many :halls, through: :screenings
+  has_and_belongs_to_many :actors
   has_one_attached :poster_image
 
   validates_associated :screenings, :halls
