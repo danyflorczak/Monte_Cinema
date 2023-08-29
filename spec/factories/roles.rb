@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :role do
     name { "MyString" }
-    actor { nil }
-    movie { nil }
+    actor
+    movie
   end
 end
