@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_27_195704) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_29_111307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,6 +94,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_27_195704) do
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.bigint "actor_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_roles_on_actor_id"
+    t.index ["movie_id"], name: "index_roles_on_movie_id"
+  end
+
   create_table "screenings", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.datetime "end_time"
@@ -138,6 +148,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_27_195704) do
   add_foreign_key "promotions", "users"
   add_foreign_key "reservations", "screenings"
   add_foreign_key "reservations", "users"
+  add_foreign_key "roles", "actors"
+  add_foreign_key "roles", "movies"
   add_foreign_key "screenings", "halls"
   add_foreign_key "screenings", "movies"
 end
