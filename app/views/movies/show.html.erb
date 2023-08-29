@@ -10,7 +10,7 @@
         <div class="col col-6">
           <%= image_tag "calendar.png", size: "50x50", class: "relase-date-icon" %>
           <h4 class="fw-light">Relase date: </h4>
-          <p> 25 august 2011 </p>
+          <p> <%= @movie.release_date.strftime("%d %B %Y") %></p> </p>
         </div>
          <div class="col col-6">
           <%= image_tag "clock.png", size: "50x50", class: "duration-icon" %>
@@ -31,19 +31,23 @@
       </div>
       <div class="row py-0">
         <div class="col">
-          <p>Genre: Placeholder</p>
+          <p>Genre: <%= @movie.genre %></p>
           <hr>
         </div>
       </div>
       <div class="row py-0">
         <div class="col">
-          <p>Director: Placeholder</p>
+          <p>Director: <%= @movie.director %></p>
           <hr>
         </div>
       </div>
       <div class="row py-0">
         <div class="col">
-          <p>Cast: Placeholder</p>
+          <p>Cast:
+             <% @movie.roles.each do |role| %>
+              <%= role.actor.name %>,
+             <% end %>
+          </p>
           <hr>
         </div>
       </div>

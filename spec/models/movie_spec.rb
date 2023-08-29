@@ -10,12 +10,17 @@ RSpec.describe Movie, type: :model do
   describe "associations" do
     it { is_expected.to have_many(:screenings) }
     it { is_expected.to have_many(:halls).through(:screenings) }
+    it { should have_many(:roles) }
+    it { should have_many(:actors).through(:roles) }
   end
 
   describe "validations" do
     it { should validate_presence_of :title }
     it { should validate_presence_of :description }
     it { should validate_presence_of :duration }
+    it { should validate_presence_of :director }
+    it { should validate_presence_of :release_date }
+    it { should validate_presence_of :genre }
     it { should validate_uniqueness_of :title }
     it { should validate_numericality_of(:duration).is_greater_than(0) }
   end
