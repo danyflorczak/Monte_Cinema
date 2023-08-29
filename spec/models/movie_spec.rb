@@ -10,7 +10,8 @@ RSpec.describe Movie, type: :model do
   describe "associations" do
     it { is_expected.to have_many(:screenings) }
     it { is_expected.to have_many(:halls).through(:screenings) }
-    it { is_expected.to have_and_belong_to_many(:actors) }
+    it { should have_many(:roles) }
+    it { should have_many(:actors).through(:roles) }
   end
 
   describe "validations" do
