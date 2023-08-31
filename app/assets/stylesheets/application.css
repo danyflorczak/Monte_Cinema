@@ -163,9 +163,9 @@ footer a:hover {
 
 .date-links a{
   text-decoration: none !important;
-  color: #000 !important;
+  color: inherit;
 }
 
 .date-links a:hover {
-  color: #ffc107 !important;  
+  color: #ffc107 ;  
 }
