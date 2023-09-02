@@ -1,6 +1,14 @@
 <h5 class="card-title"><%= movie.title %></h5>
 <h6 class="card-subtitle mb-2 text-muted"><%= movie.duration %> min</h6>
 <p class="card-text"><%= movie.description %></p>
+<p class="card-text">genre: <%= movie.genre %></p>
+<p class="card-text">director: <%= movie.director %></p>
+<p class="card-text">
+  Cast:
+  <% movie.roles.each do |role| %>
+    <%= role.actor.name %>,
+  <% end %>
+</p>
 <div class="d-flex flex-row">
 <% movie.screenings.sort_by(&:start_time).each do |screening| %>
   <% if screening.movie_id == movie.id && which_day?(screening) %>
