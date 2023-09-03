@@ -207,6 +207,8 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
+    pay (6.8.0)
+      rails (>= 6.0.0)
     pg (1.4.3)
     public_suffix (5.0.0)
     puma (5.6.5)
@@ -342,6 +344,7 @@ GEM
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     stringio (3.0.8)
+    stripe (9.1.0)
     strscan (3.0.4)
     thor (1.2.1)
     time (0.2.2)
@@ -398,6 +401,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 1.0, >= 1.0.1)
   open-uri (~> 0.3.0)
   pagy (~> 5.10)
+  pay (~> 6.8)
   pg (~> 1.1)
   puma (~> 5.0)
   pundit (~> 2.2)
@@ -419,6 +423,7 @@ DEPENDENCIES
   simplecov (~> 0.21.2)
   sprockets-rails
   stimulus-rails
+  stripe (~> 9.1)
   turbo-rails
   tzinfo-data
   web-console

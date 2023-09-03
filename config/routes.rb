@@ -23,4 +23,6 @@ Rails.application.routes.draw do
     patch 'cancel', to: 'reservations#cancel'
     patch 'confirm', to: 'reservations#confirm'
   end
+  get "checkout", to: "checkouts#show"
+  get "checkout/success", to: "checkouts#success"
 end

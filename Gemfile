@@ -8,10 +8,12 @@ gem "importmap-rails"
 gem "jbuilder"
 gem "open-uri", "~> 0.3.0"
 gem "pagy", "~> 5.10"
+gem 'pay', '~> 6.8'
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.3"
 gem "sprockets-rails"
+gem 'stripe', '~> 9.1'
 gem "stimulus-rails"
 gem "turbo-rails"
 # seeds and tests
