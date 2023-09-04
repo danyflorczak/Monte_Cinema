@@ -20,23 +20,23 @@ end
     director: Faker::Name.name,
     release_date: Faker::Date.between(from: 20.years.ago, to: Date.today),
   )
-  
+
   rand(1..5).times do
     actor = Actor.create(
-      name: Faker::Name.name
+      name: Faker::Name.name,
     )
-    
+
     Role.create(
       name: "Some Role",
-      actor: actor,
-      movie: movie
+      actor:,
+      movie:,
     )
   end
-  
+
   image_url = Faker::LoremFlickr.image.to_s
   filename = File.basename(image_url)
   file = URI.open(image_url)
-  movie.poster_image.attach(io: file, filename: filename)
+  movie.poster_image.attach(io: file, filename:)
 end
 
 200.times do
