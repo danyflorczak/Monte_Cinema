@@ -29,12 +29,12 @@ class User < ApplicationRecord
     {
       address: {
         city: pay_customer.owner.city,
-        country: pay_customer.owner.country
+        country: pay_customer.owner.country,
       },
       metadata: {
         pay_customer_id: pay_customer.id,
-        user_id: id
-      }
+        user_id: id,
+      },
     }
   end
 end
