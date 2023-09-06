@@ -7,7 +7,6 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   root to: 'static_pages#home'
-  get 'about', to: 'static_pages#about'
   resources :screenings do
     resources :reservations, only: %i[new create] do
       collection do
