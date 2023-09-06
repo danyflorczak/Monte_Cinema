@@ -43,6 +43,10 @@
       <%else%>
           <%= form.submit 'Book a ticket', class: "btn btn-primary m-3" %>
       <%end%>
+        <%= render partial: "pay/stripe/checkout_button", locals: {
+        session: @checkout_session,
+        title: "Checkout"
+      } %>
     </div>
   <% end %>
 </div>
