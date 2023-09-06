@@ -12,6 +12,25 @@ class ReservationsController < ApplicationController
   def new
     authorize Reservation
     @reservation = Reservation.new
+    current_user.set_payment_processor :stripe
+    current_user.payment_processor.customer
+
+    @checkout_session = current_user
+      .payment_processor
+      .checkout(
+        mode: "payment",
+        line_items: [{
+          price_data: {
+            currency: "pln",
+            product_data: {
+              name: @screening.movie.title,
+            },
+            unit_amount: @screening.price.to_i * 100,
+          },
+          quantity: 1,
+        }],
+        success_url: checkout_success_url,
+      )
   end
 
   def create
