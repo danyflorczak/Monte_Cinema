@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="card m-3 bg-dark text-white" style="width: 30rem;">
+    <div class="card-body">
+      <%= render partial: 'reservation', locals: {reservation: @reservation} %>
+      <%= button_to "Cancel Reservation", reservation_cancel_path(@reservation), method: :patch, class: "btn btn-danger m-2" %>
+      <% if manager? %>
+        <%= button_to "Confirm Reservation", reservation_confirm_path(@reservation), method: :patch, class: "btn btn-success m-2" %>
+      <% end %>
+        <%= render partial: "pay/stripe/checkout_button", locals: {
+        session: @checkout_session,
+        title: "Checkout"
+        } %>
+    </div>
+  </div>
+</div>
+

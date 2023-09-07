@@ -7,11 +7,32 @@ class ReservationsController < ApplicationController
 
   def index
     @pagy, @reservations = pagy(policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user))
+    @reservations.each do |reservation|
+      current_user.set_payment_processor :stripe
+      current_user.payment_processor.customer
+
+      @checkout_session = current_user
+        .payment_processor
+        .checkout(
+          mode: "payment",
+          line_items: [{
+            price_data: {
+              currency: "pln",
+              product_data: {
+                name: reservation.screening.movie.title,
+              },
+              unit_amount: reservation.screening.price.to_i * 100,
+            },
+            quantity: 1,
+          }],
+          success_url: checkout_success_url,
+        )
+    end
   end
 
-  def new
+  def show
     authorize Reservation
-    @reservation = Reservation.new
+    @reservation = Reservation.find(params[:id])
     current_user.set_payment_processor :stripe
     current_user.payment_processor.customer
 
@@ -23,9 +44,9 @@ class ReservationsController < ApplicationController
           price_data: {
             currency: "pln",
             product_data: {
-              name: @screening.movie.title,
+              name: @reservation.screening.movie.title,
             },
-            unit_amount: @screening.price.to_i * 100,
+            unit_amount: @reservation.screening.price.to_i * 100 * @reservation.tickets.count,
           },
           quantity: 1,
         }],
@@ -33,12 +54,16 @@ class ReservationsController < ApplicationController
       )
   end
 
+  def new
+    authorize Reservation
+    @reservation = Reservation.new
+  end
+
   def create
     authorize Reservation
     @reservation = create_reservation(current_user.id, current_user.email, :booked)
-
     if @reservation.call
-      redirect_to movies_path, notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
     else
       render :new, status: :unprocessable_entity
     end
@@ -49,7 +74,7 @@ class ReservationsController < ApplicationController
     @reservation = create_reservation(nil, "Created at desk", :confirmed)
 
     if @reservation.call
-      redirect_to movies_path, notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
     else
       render :new, status: :unprocessable_entity
     end
@@ -60,7 +85,7 @@ class ReservationsController < ApplicationController
     @reservation = create_reservation(nil, params[:email], :booked)
 
     if @reservation.call
-      redirect_to movies_path, notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
     else
       render :new, status: :unprocessable_entity
     end

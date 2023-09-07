@@ -15,6 +15,10 @@ class ReservationPolicy < ApplicationPolicy
     manager? || client?
   end
 
+  def show?
+    true
+  end
+
   def new?
     true
   end
