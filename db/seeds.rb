@@ -28,8 +28,8 @@ end
 
     Role.create(
       name: "Some Role",
-      actor:,
-      movie:,
+      actor: actor,
+      movie: movie,
     )
   end
 
