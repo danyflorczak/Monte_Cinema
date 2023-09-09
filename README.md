@@ -20,6 +20,9 @@ $ rails db:create
 $ rails db:migrate
 $ rails db:seed
 
+# compile assets
+$ rails assets:precompile
+
 # Run server
 $ rails server
 
