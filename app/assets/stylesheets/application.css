@@ -169,3 +169,7 @@ footer a:hover {
 .date-links a:hover {
   color: #ffc107 ;  
 }
+
+#ticket-card {
+  width: 20rem !important;
+}

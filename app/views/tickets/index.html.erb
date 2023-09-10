@@ -1,6 +1,30 @@
 <% @reservation.tickets.each do |ticket| %>
-  <div class="container">
-    <h4><%= @reservation.movie.title %> </p>
-    <h4><%= ticket.seat %> </p>
+<div class="card m-3 bg-dark text-white p-3" id="ticket-card">
+  <h5 class="card-title"> Reservation ID: <%= @reservation.id %> </h5>
+  <h6 class="card-subtitle mb-2 text-muted">Owner: <%= @reservation.email %></h6>
+  <div class="card-text">
+    <ul>
+      <li>
+          <strong>Movie:</strong>
+          <%= @reservation.screening.movie.title %>
+      </li>
+
+      <li>
+          <strong>Hall:</strong>
+          <%=  @reservation.screening.hall.name %> 
+      </li>
+
+      <li>
+          <strong>Hall:</strong>
+          <%=  format_date(@reservation.screening.start_time) %> 
+      </li>
+
+      <li>
+        <strong>Seat:</strong>
+        <%= ticket.seat %>
+      </li>
+
+    </ul>
   </div>
+</div>
 <% end %>
