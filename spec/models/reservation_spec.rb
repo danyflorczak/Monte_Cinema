@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Reservation, type: :model do
+RSpec.describe Reservation do
   describe "associations" do
     it { is_expected.to belong_to(:screening) }
     it { is_expected.to belong_to(:user).optional(true) }
@@ -11,6 +11,6 @@ RSpec.describe Reservation, type: :model do
   end
 
   describe "validations" do
-    it { should validate_presence_of :email }
+    it { is_expected.to validate_presence_of :email }
   end
 end

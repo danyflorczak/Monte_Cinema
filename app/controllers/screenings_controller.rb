@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ScreeningsController < ApplicationController
-  before_action :set_screening, only: %i(show edit update destroy)
-  before_action :authenticate_user!, except: %i(show)
+  before_action :set_screening, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: %i[show]
 
   def index
     authorize Screening
@@ -28,7 +28,7 @@ class ScreeningsController < ApplicationController
     if @screening.errors.any?
       render :new, status: :unprocessable_entity
     else
-      redirect_to screening_url(@screening), notice: "Screening was successfully created."
+      redirect_to screening_url(@screening), notice: I18n.t("screening.create")
     end
   end
 
@@ -39,7 +39,7 @@ class ScreeningsController < ApplicationController
     if @screening.errors.any?
       render :edit, status: :unprocessable_entity
     else
-      redirect_to screening_url(@screening), notice: "Screening was successfully updated."
+      redirect_to screening_url(@screening), notice: I18n.t("screening.update")
     end
   end
 
@@ -47,7 +47,7 @@ class ScreeningsController < ApplicationController
     authorize Screening
     ::Screenings::Delete.new(params[:id]).call
 
-    redirect_to screenings_url, notice: "Screening was successfully destroyed."
+    redirect_to screenings_url, notice: I18n.t("screening.destroy")
   end
 
   private

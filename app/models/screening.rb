@@ -10,7 +10,7 @@ class Screening < ApplicationRecord
   validate :used?
 
   def all_taken_seats
-    reservations.joins(:tickets).where.not(status: :cancelled).pluck(:'tickets.seat')
+    reservations.joins(:tickets).where.not(status: :cancelled).pluck(:"tickets.seat")
   end
 
   def available_seats

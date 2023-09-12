@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :reservation do
-    association :screening
+    screening
     email { "testemail@gmail.com" }
     status { :booked }
   end

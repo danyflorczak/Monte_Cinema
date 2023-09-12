@@ -7,6 +7,6 @@ FactoryBot.define do
     duration { Faker::Number.number(digits: 2).to_i }
     genre { Faker::Book.genre }
     director { Faker::Name.name }
-    release_date { Faker::Date.between(from: 20.years.ago, to: Date.today) }
+    release_date { Faker::Date.between(from: 20.years.ago, to: Time.zone.today) }
   end
 end

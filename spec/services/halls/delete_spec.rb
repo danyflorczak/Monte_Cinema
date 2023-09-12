@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe Halls::Delete do
-  let!(:hall) { create :hall }
+  subject(:delete_hall) { instance.call }
+
+  let!(:hall) { create(:hall) }
   let(:instance) { described_class.new(hall.id) }
 
-  subject { instance.call }
-
   describe ".call" do
-    it "deletes hall" do
-      expect { subject }.to change { Hall.count }.by(-1)
+    it "deletes the hall" do
+      expect { delete_hall }.to change(Hall, :count).by(-1)
     end
   end
 end

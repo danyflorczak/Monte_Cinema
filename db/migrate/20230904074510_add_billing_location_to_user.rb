@@ -2,7 +2,9 @@
 
 class AddBillingLocationToUser < ActiveRecord::Migration[7.0]
   def change
-    add_column :users, :city, :string
-    add_column :users, :country, :string
+    change_table :users, bulk: true do |t|
+      t.string :city
+      t.string :country
+    end
   end
 end

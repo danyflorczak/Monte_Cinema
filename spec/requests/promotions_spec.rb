@@ -2,8 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe "/promotions", type: :request do
-  let(:user) { create :user }
+RSpec.describe "/promotions" do
+  let(:user) { create(:user) }
+
   describe "GET /promotions" do
     context "when user not signed in" do
       it "redirects to sign_in" do
@@ -13,15 +14,16 @@ RSpec.describe "/promotions", type: :request do
 
       it "returns redirect status" do
         get("/promotions")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in user }
+
       it "returns successful response" do
         get("/promotions")
-        expect(response.status).to eq(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders proper template" do

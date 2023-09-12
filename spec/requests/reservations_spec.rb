@@ -2,9 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe "/halls", type: :request do
-  let(:user) { create :user }
-  let(:manager) { create :user, email: "admin@gmail.com", role: :manager }
+RSpec.describe "/halls" do
+  let(:user) { create(:user) }
+  let(:manager) { create(:user, email: "admin@gmail.com", role: :manager) }
+
   describe "GET /reservations" do
     context "when user not signed in" do
       it "redirects to sign_in" do
@@ -14,16 +15,17 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/reservations")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
   end
 
   context "when user with permission" do
     before { sign_in manager }
+
     it "returns successful response" do
       get("/reservations")
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders proper template" do
@@ -33,10 +35,11 @@ RSpec.describe "/halls", type: :request do
   end
 
   describe "GET screenings/screening_id/reservations/new" do
-    let(:screening) { create :screening }
+    let(:screening) { create(:screening) }
+
     it "returns successful response" do
       get("/screenings/#{screening.id}/reservations/new")
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders proper template" do
