@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
     authorize Movie
     @movie = ::Movies::Create.new(movie_params).call
     if @movie.valid?
-      redirect_to movie_url(@movie), notice: I18.t("movie.create")
+      redirect_to movie_url(@movie), notice: I18n.t("movie.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,14 +40,14 @@ class MoviesController < ApplicationController
     if @movie.errors.any?
       render :edit, status: :unprocessable_entity
     else
-      redirect_to movie_url(@movie), notice: I18.t("movie.update")
+      redirect_to movie_url(@movie), notice: I18n.t("movie.update")
     end
   end
 
   def destroy
     authorize Movie
     ::Movies::Delete.new(params[:id]).call
-    redirect_to movies_url, notice: I18.t("movie.destroy")
+    redirect_to movies_url, notice: I18n.t("movie.destroy")
   end
 
   private
