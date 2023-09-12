@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_074510) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_130540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_074510) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_halls_on_name", unique: true
   end
 
   create_table "movies", force: :cascade do |t|
@@ -64,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_074510) do
     t.string "genre"
     t.string "director"
     t.datetime "release_date"
+    t.index ["title"], name: "index_movies_on_title", unique: true
   end
 
   create_table "pay_charges", force: :cascade do |t|

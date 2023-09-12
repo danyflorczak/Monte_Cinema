@@ -6,12 +6,12 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
-  root to: 'static_pages#home'
+  root to: "static_pages#home"
   resources :screenings do
     resources :reservations, only: %i[new create] do
       collection do
-        post 'create_at_desk', to: 'reservations#create_at_desk'
-        post 'create_without_registration', to: 'reservations#create_without_registration'
+        post "create_at_desk", to: "reservations#create_at_desk"
+        post "create_without_registration", to: "reservations#create_without_registration"
       end
     end
   end
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :tickets, only: %i[index]
   end
   resources :reservations, except: %i[new create] do
-    patch 'cancel', to: 'reservations#cancel'
-    patch 'confirm', to: 'reservations#confirm'
+    patch "cancel", to: "reservations#cancel"
+    patch "confirm", to: "reservations#confirm"
   end
 end

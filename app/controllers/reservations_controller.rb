@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ReservationsController < ApplicationController
-  before_action :set_screening, only: %i(new create create_at_desk create_without_registration)
-  before_action :set_reservation, only: %i(confirm cancel)
-  before_action :authenticate_user!, except: %i(new create_without_registration)
+  before_action :set_screening, only: %i[new create create_at_desk create_without_registration]
+  before_action :set_reservation, only: %i[confirm cancel]
+  before_action :authenticate_user!, except: %i[new create_without_registration]
 
   def index
     @pagy, @reservations = pagy(policy_scope(Reservation).includes(:tickets, :screening, :movie, :hall, :user))
@@ -12,27 +12,7 @@ class ReservationsController < ApplicationController
   def show
     authorize Reservation
     @reservation = Reservation.find(params[:id])
-    current_user.set_payment_processor :stripe
-    current_user.payment_processor.customer
-
-    @checkout_session = current_user
-      .payment_processor
-      .checkout(
-        mode: "payment",
-        line_items: [{
-          price_data: {
-            currency: "pln",
-            product_data: {
-              name: @reservation.screening.movie.title,
-              description: @reservation.screening.movie.description,
-            },
-            unit_amount: @reservation.screening.price.to_i * 100 * @reservation.tickets.count,
-          },
-          quantity: 1,
-        }],
-        success_url: reservation_tickets_url(@reservation),
-        cancel_url: reservation_url(@reservation),
-      )
+    setup_payment_processor
   end
 
   def new
@@ -44,7 +24,7 @@ class ReservationsController < ApplicationController
     authorize Reservation
     @reservation = create_reservation(current_user.id, current_user.email, :booked)
     if @reservation.call
-      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: I18n.t("reservation.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -55,7 +35,7 @@ class ReservationsController < ApplicationController
     @reservation = create_reservation(nil, "Created at desk", :confirmed)
 
     if @reservation.call
-      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: I18n.t("reservation.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -66,7 +46,7 @@ class ReservationsController < ApplicationController
     @reservation = create_reservation(nil, params[:email], :booked)
 
     if @reservation.call
-      redirect_to reservation_path(@reservation.reservation), notice: "Reservation successfully created"
+      redirect_to reservation_path(@reservation.reservation), notice: I18n.t("reservation.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -75,18 +55,18 @@ class ReservationsController < ApplicationController
   def cancel
     cancelation = ::Reservations::CancelReservation.new(@reservation)
     if cancelation.call
-      redirect_to reservations_path, notice: "Reservation canceled"
+      redirect_to reservations_path, notice: I18n.t("reservation.canceled")
     else
-      redirect_back fallback_location: reservations_path, alert: "Confirmed reservations can't be canceled!"
+      redirect_back fallback_location: reservations_path, alert: I18n.t("reservation.alerts.confirmed")
     end
   end
 
   def confirm
     confirmation = ::Reservations::ConfirmReservation.new(@reservation)
     if confirmation.call
-      redirect_to reservations_path, notice: "Reservation confirmed"
+      redirect_to reservations_path, notice: I18n.t("reservation.confirmed")
     else
-      redirect_back fallback_location: reservations_path, alert: "Canceled reservations can't be confirmed!"
+      redirect_back fallback_location: reservations_path, alert: I18n.t("reservation.alerts.canceled")
     end
   end
 
@@ -106,11 +86,37 @@ class ReservationsController < ApplicationController
       email:,
       screening_id: params[:screening_id],
       seats: params[:seats],
-      status:,
+      status:
     )
   end
 
   def reservation_params
     params.require(:reservation).permit(:screening_id, :user_id, :email, :ticket_id, :status, :seats)
+  end
+
+  def setup_payment_processor
+    current_user.set_payment_processor(:stripe)
+    current_user.payment_processor.customer
+    @checkout_session = payment_processor_checkout(current_user)
+  end
+
+  def calculate_unit_amount
+    @reservation.screening.price.to_i * 100 * @reservation.tickets.count
+  end
+
+  def movie_details
+    { name: @reservation.screening.movie.title, description: @reservation.screening.movie.description }
+  end
+
+  def payment_processor_checkout(current_user)
+    current_user.payment_processor.checkout(mode: "payment",
+                                            line_items: [
+                                              { price_data: { currency: "pln",
+                                                              product_data: movie_details,
+                                                              unit_amount: calculate_unit_amount },
+                                                quantity: 1 }
+                                            ],
+                                            success_url: reservation_tickets_url(@reservation),
+                                            cancel_url: reservation_url(@reservation))
   end
 end

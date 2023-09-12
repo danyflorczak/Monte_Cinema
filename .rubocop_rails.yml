@@ -55,9 +55,7 @@ Rails/SafeNavigation:
   ConvertTry: true
 
 Rails/SaveBang:
-  Enabled: true
-  AllowImplicitReturn: false
-  AllowedReceivers: []
+  Enabled: false
 
 Rails/TimeZone:
   Enabled: true
@@ -66,3 +64,9 @@ Rails/TimeZone:
 Rails/WhereExists:
   Enabled: true
   EnforcedStyle: where
+
+Rails/NotNullColumn:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false

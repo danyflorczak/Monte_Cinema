@@ -10,6 +10,11 @@ AllCops:
     - bin/*
     - db/schema.rb
     - vendor/bundle/**/*
+    - db/seeds.rb
+    - db/migrate/20230903143748_create_pay_tables.pay.rb
+    - db/migrate/20230822104922_create_active_storage_tables.active_storage.rb
+    - db/migrate/20220921173434_add_devise_to_users.rb
+    - config/**/*
 
 Documentation:
   Enabled: false

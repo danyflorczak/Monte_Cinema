@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :promotion do
-    association :user
+    user
     value { rand(5..10) }
     description { Faker::Lorem.sentence }
     code { rand(15..24) }

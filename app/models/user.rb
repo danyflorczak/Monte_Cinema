@@ -2,11 +2,11 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable,
-    :omniauthable, omniauth_providers: [:google_oauth2]
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
   enum role: { client: 0, manager: 1 }
   has_many :reservations
-  has_many :promotions
+  has_many :promotions, dependent: :destroy
   validates :email, presence: true
   validates :email, uniqueness: true
 
@@ -29,12 +29,12 @@ class User < ApplicationRecord
     {
       address: {
         city: pay_customer.owner.city,
-        country: pay_customer.owner.country,
+        country: pay_customer.owner.country
       },
       metadata: {
         pay_customer_id: pay_customer.id,
-        user_id: id,
-      },
+        user_id: id
+      }
     }
   end
 end

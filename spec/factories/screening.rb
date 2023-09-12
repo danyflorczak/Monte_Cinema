@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :screening do
-    association :movie
-    association :hall
+    movie
+    hall
     start_time { DateTime.current.beginning_of_minute }
     end_time { start_time + 2.hours }
     price { rand(1..10) }

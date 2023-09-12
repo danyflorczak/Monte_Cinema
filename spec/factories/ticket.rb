@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :ticket do
-    association :reservation
+    reservation
     seat { 1 }
   end
 end

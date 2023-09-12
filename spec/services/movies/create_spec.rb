@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Movies::Create do
+  subject(:create_movie) { described_class.new(params).call }
+
   let(:params) do
     {
       title: Faker::Movie.title,
@@ -10,14 +12,13 @@ RSpec.describe Movies::Create do
       duration: Faker::Number.number(digits: 2).to_i,
       genre: Faker::Book.genre,
       director: Faker::Name.name,
-      release_date: Faker::Date.between(from: 20.years.ago, to: Date.today),
+      release_date: Faker::Date.between(from: 20.years.ago, to: Time.zone.today)
     }
   end
-  subject { described_class.new(params).call }
 
   describe ".call" do
-    it "creates movie" do
-      expect { subject }.to change { Movie.count }.by(1)
+    it "creates the movie" do
+      expect { create_movie }.to change(Movie, :count).by(1)
     end
   end
 end

@@ -7,7 +7,7 @@ hall_capacities = [20, 50, 100, 200]
 10.times do
   Hall.create(
     name: Faker::FunnyName.name,
-    capacity: hall_capacities.sample,
+    capacity: hall_capacities.sample
   )
 end
 
@@ -18,18 +18,18 @@ end
     duration: rand(90..189),
     genre: Faker::Book.genre,
     director: Faker::Name.name,
-    release_date: Faker::Date.between(from: 20.years.ago, to: Date.today),
+    release_date: Faker::Date.between(from: 20.years.ago, to: Time.zone.today)
   )
 
   rand(1..5).times do
     actor = Actor.create(
-      name: Faker::Name.name,
+      name: Faker::Name.name
     )
 
     Role.create(
       name: "Some Role",
-      actor: actor,
-      movie: movie,
+      actor:,
+      movie:
     )
   end
 
@@ -46,20 +46,20 @@ end
     hall_id: Hall.all.sample.id,
     start_time: screening_start_time,
     end_time: screening_start_time + 120.minutes,
-    price: rand(15..24),
+    price: rand(15..24)
   )
 end
 
 manager = User.new(
   email: "test@manager.com",
   password: "password",
-  role: "manager",
+  role: "manager"
 )
 manager.save!
 
 client = User.new(
   email: "test@client.com",
   password: "password",
-  role: "client",
+  role: "client"
 )
 client.save!

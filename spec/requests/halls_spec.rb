@@ -2,9 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe "/halls", type: :request do
-  let(:user) { create :user }
-  let(:manager) { create :user, email: "admin@gmail.com", role: :manager }
+RSpec.describe "/halls" do
+  let(:user) { create(:user) }
+  let(:manager) { create(:user, email: "admin@gmail.com", role: :manager) }
+
   describe "GET /halls" do
     context "when user not signed in" do
       it "redirects to sign_in" do
@@ -14,12 +15,13 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         get("/halls")
         expect(response).to redirect_to("/")
@@ -27,15 +29,16 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns successful response" do
         get("/halls")
-        expect(response.status).to eq(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders proper template" do
@@ -54,12 +57,13 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls/new")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         get("/halls/new")
         expect(response).to redirect_to("/")
@@ -67,15 +71,16 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls/new")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns successful response" do
         get("/halls/new")
-        expect(response.status).to eq(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders proper template" do
@@ -88,7 +93,7 @@ RSpec.describe "/halls", type: :request do
   describe "POST /halls" do
     let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
     let(:name) { Faker::FunnyName.name }
-    let(:capacity) { Faker::Number.number(digits: 2) }
+    let(:capacity) { Faker::Number.number(digits: 2).to_i }
 
     context "when no user" do
       it "redirects to sign_in" do
@@ -98,16 +103,17 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         post("/halls")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
 
-      it "does not create a hall " do
+      it "does not create a hall" do
         expect { post("/halls", params:) }.not_to change(Hall, :count)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         post("/halls", params:)
         expect(response).to redirect_to("/")
@@ -115,7 +121,7 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         post("/halls")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
 
       it "does not create a hall" do
@@ -125,9 +131,10 @@ RSpec.describe "/halls", type: :request do
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns redirect status" do
         post("/halls", params:)
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
 
       it "creates hall" do
@@ -137,6 +144,8 @@ RSpec.describe "/halls", type: :request do
 
     context "when params invalid" do
       before { sign_in manager }
+
+      let(:name) { nil }
       let(:capacity) { "s" }
 
       it "doesn't create hall" do
@@ -145,25 +154,14 @@ RSpec.describe "/halls", type: :request do
 
       it "returns unsuccessful response" do
         post("/halls", params:)
-        expect(response.status).to eq(422)
-      end
-
-      let(:capacity) { Faker::Number.number(digits: 2) }
-      let(:name) { nil }
-
-      it "doesn't create hall" do
-        expect { post("/halls", params:) }.not_to change(Hall, :count)
-      end
-
-      it "returns unsuccessful response" do
-        post("/halls", params:)
-        expect(response.status).to eq(422)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
-  describe "GET /halls/hall_id/edit" do
-    let(:hall) { create :hall }
+  describe "GET /halls/:hall_id/edit" do
+    let(:hall) { create(:hall) }
+
     context "when user not signed in" do
       it "redirects to sign_in" do
         get("/halls/#{hall.id}/edit")
@@ -172,12 +170,13 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls/#{hall.id}/edit")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         get("/halls/#{hall.id}/edit")
         expect(response).to redirect_to("/")
@@ -185,15 +184,16 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         get("/halls/#{hall.id}/edit")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns successful response" do
         get("/halls/#{hall.id}/edit")
-        expect(response.status).to eq(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders proper template" do
@@ -203,12 +203,11 @@ RSpec.describe "/halls", type: :request do
     end
   end
 
-  describe "PATCH /halls" do
-    let(:hall) { create :hall }
+  describe "PATCH /halls/:hall_id" do
+    let(:hall) { create(:hall) }
     let(:params) { { hall: attributes_for(:hall, name:, capacity:) } }
-
     let(:name) { "Hall #{Faker::Number.number(digits: 1)}" }
-    let(:capacity) { Faker::Number.number(digits: 2) }
+    let(:capacity) { Faker::Number.number(digits: 2).to_i }
 
     context "when user not signed in" do
       it "redirects to sign_in" do
@@ -218,12 +217,13 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         patch("/halls/#{hall.id}")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         patch("/halls/#{hall.id}", params:)
         expect(response).to redirect_to("/")
@@ -231,51 +231,45 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         patch("/halls/#{hall.id}")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns redirect status" do
         patch("/halls/#{hall.id}", params:)
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
 
       it "updates hall" do
-        expect { patch("/halls/#{hall.id}", params:) }.to change { hall.reload.name }.from(hall.name).to(name.to_s)
+        expect { patch("/halls/#{hall.id}", params:) }.to change {
+                                                            hall.reload.name
+                                                          }.from(hall.name).to(name.to_s)
       end
     end
 
     context "when params invalid" do
       before { sign_in manager }
-      let(:duration) { "s" }
 
-      it "doesn't create hall" do
-        expect { patch("/halls/#{hall.id}", params:) }.not_to(change { hall.reload.name })
-      end
-
-      it "returns unsuccessful response" do
-        patch("/halls/#{hall.id}", params:)
-        expect(response.status).to eq(422)
-      end
-
-      let(:duration) { Faker::Number.number(digits: 2) }
       let(:name) { nil }
+      let(:capacity) { "s" }
 
-      it "doesn't create hall" do
+      it "doesn't update hall" do
         expect { patch("/halls/#{hall.id}", params:) }.not_to(change { hall.reload.name })
       end
 
       it "returns unsuccessful response" do
         patch("/halls/#{hall.id}", params:)
-        expect(response.status).to eq(422)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
-  describe "DELETE /halls" do
-    let!(:hall) { create :hall }
+  describe "DELETE /halls/:hall_id" do
+    let!(:hall) { create(:hall) }
+
     context "when user not signed in" do
       it "redirects to sign_in" do
         delete("/halls/#{hall.id}")
@@ -284,12 +278,13 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         delete("/halls/#{hall.id}")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user without permission" do
       before { sign_in user }
+
       it "redirects to root" do
         delete("/halls/#{hall.id}")
         expect(response).to redirect_to("/")
@@ -297,15 +292,16 @@ RSpec.describe "/halls", type: :request do
 
       it "returns redirect status" do
         delete("/halls/#{hall.id}")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
     end
 
     context "when user with permission" do
       before { sign_in manager }
+
       it "returns redirect status" do
         delete("/halls/#{hall.id}")
-        expect(response.status).to eq(302)
+        expect(response).to have_http_status(:found)
       end
 
       it "redirects to /halls" do
@@ -313,8 +309,8 @@ RSpec.describe "/halls", type: :request do
         expect(response).to redirect_to("/halls")
       end
 
-      it "destroy hall record" do
-        expect { delete("/halls/#{hall.id}") }.to change(Hall, :count)
+      it "destroys the hall record" do
+        expect { delete("/halls/#{hall.id}") }.to change(Hall, :count).by(-1)
       end
     end
   end
