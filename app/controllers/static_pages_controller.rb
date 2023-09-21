@@ -2,6 +2,6 @@
 
 class StaticPagesController < ApplicationController
   def home
-    @movies = Movie.all
+    @movies = Movie.includes(poster_image_attachment: :blob)
   end
 end
