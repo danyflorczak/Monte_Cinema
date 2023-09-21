@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
 
   def index
     authorize Movie
-    @movies = Movie.includes(:screenings)
+    @movies = Movie.includes(:screenings, roles: :actor)
     @screenings = Screening.all
   end
 

@@ -44,7 +44,7 @@
       <div class="row py-0">
         <div class="col">
           <p>Cast:
-             <% @movie.roles.each do |role| %>
+             <% @movie.roles.includes(:actor).each do |role| %>
               <%= role.actor.name %>,
              <% end %>
           </p>
